@@ -5,7 +5,7 @@ amount: 30000
 deadline: 2026-05-09
 fit_score: 6
 status: new
-generated: 2026-04-17T15:06:35.290858
+generated: 2026-04-17T15:39:23.470115
 ---
 
 # Black History Education Program

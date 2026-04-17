@@ -3,7 +3,7 @@ grant_id: GRANT-2026-004
 funder: Kellogg Foundation
 amount: 250000
 status: template ready
-generated: 2026-04-17T15:06:35.350315
+generated: 2026-04-17T15:39:23.519148
 ---
 
 # Philanthropy Education Program - Proposal Draft

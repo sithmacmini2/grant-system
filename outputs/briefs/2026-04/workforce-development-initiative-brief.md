@@ -5,7 +5,7 @@ amount: 200000
 deadline: 2026-08-15
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.290307
+generated: 2026-04-17T15:39:23.469593
 ---
 
 # Workforce Development Initiative

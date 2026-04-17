@@ -5,7 +5,7 @@ amount: 50000
 deadline: 2026-05-17
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.287281
+generated: 2026-04-17T15:39:23.466378
 ---
 
 # Youth Leadership Development Grant

@@ -1,33 +1,33 @@
 {
-  "scan_date": "2026-04-17T15:06:35.226229",
-  "grants_scanned": 25,
+  "scan_date": "2026-04-17T15:39:23.413244",
+  "grants_scanned": 32,
   "patterns_identified": [
-    "Government funding pattern",
     "Foundation grant pattern",
     "Youth programming pattern",
-    "Cultural programming pattern",
-    "Community development pattern"
+    "Community development pattern",
+    "Government funding pattern",
+    "Cultural programming pattern"
   ],
   "funders_clustered": {
     "Rhode Island Foundation": {
-      "count": 1,
-      "total_fit": 4,
+      "count": 2,
+      "total_fit": 8,
       "avg_fit": 4.0
     },
     "National Endowment for the Arts": {
-      "count": 1,
-      "total_fit": 4,
-      "avg_fit": 4.0
+      "count": 2,
+      "total_fit": 6,
+      "avg_fit": 3.0
     },
     "Robert Wood Johnson Foundation": {
-      "count": 1,
-      "total_fit": 4,
-      "avg_fit": 4.0
+      "count": 2,
+      "total_fit": 6,
+      "avg_fit": 3.0
     },
     "Kellogg Foundation": {
-      "count": 2,
-      "total_fit": 10,
-      "avg_fit": 5.0
+      "count": 3,
+      "total_fit": 14,
+      "avg_fit": 4.666666666666667
     },
     "Department of Labor": {
       "count": 1,
@@ -40,9 +40,9 @@
       "avg_fit": 4.0
     },
     "Ford Foundation": {
-      "count": 1,
-      "total_fit": 4,
-      "avg_fit": 4.0
+      "count": 2,
+      "total_fit": 6,
+      "avg_fit": 3.0
     },
     "Ewing Marion Kauffman Foundation": {
       "count": 1,
@@ -65,9 +65,9 @@
       "avg_fit": 4.0
     },
     "Annie E. Casey Foundation": {
-      "count": 1,
-      "total_fit": 4,
-      "avg_fit": 4.0
+      "count": 2,
+      "total_fit": 6,
+      "avg_fit": 3.0
     },
     "National Trust for Historic Preservation": {
       "count": 1,
@@ -95,9 +95,9 @@
       "avg_fit": 3.0
     },
     "Blue Cross Blue Shield of RI": {
-      "count": 1,
-      "total_fit": 4,
-      "avg_fit": 4.0
+      "count": 2,
+      "total_fit": 6,
+      "avg_fit": 3.0
     },
     "National Endowment for the Humanities": {
       "count": 1,
@@ -347,6 +347,67 @@
       "pattern_matches": [
         "Youth programming pattern"
       ]
+    },
+    {
+      "grant_id": "FOUND-001",
+      "name": "Rhode Island Foundation Community Grant",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "FOUND-002",
+      "name": "National Endowment for the Arts Community Grant",
+      "fit_score": 2,
+      "recommendation": "Skip",
+      "pattern_matches": [
+        "Cultural programming pattern"
+      ]
+    },
+    {
+      "grant_id": "FOUND-003",
+      "name": "Robert Wood Johnson Foundation Community Grant",
+      "fit_score": 2,
+      "recommendation": "Skip",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "FOUND-004",
+      "name": "Kellogg Foundation Community Grant",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "FOUND-005",
+      "name": "Ford Foundation Community Grant",
+      "fit_score": 2,
+      "recommendation": "Skip",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "FOUND-006",
+      "name": "Annie E. Casey Foundation Community Grant",
+      "fit_score": 2,
+      "recommendation": "Skip",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "FOUND-007",
+      "name": "Blue Cross Blue Shield of RI Community Grant",
+      "fit_score": 2,
+      "recommendation": "Skip",
+      "pattern_matches": []
     }
   ]
 }

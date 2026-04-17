@@ -5,7 +5,7 @@ amount: 10000
 deadline: 2026-04-22
 fit_score: 3
 status: new
-generated: 2026-04-17T15:06:35.291471
+generated: 2026-04-17T15:39:23.470629
 ---
 
 # Micro-Grant Program for Small Nonprofits

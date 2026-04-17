@@ -1,6 +1,6 @@
 ---
 title: Active Tracking Dashboard - 2026-04
-generated: 2026-04-17T15:06:35.472913
+generated: 2026-04-17T15:39:23.607461
 ---
 
 # Grant Tracking Dashboard - 2026-04
@@ -55,7 +55,7 @@ generated: 2026-04-17T15:06:35.472913
 
 | Metric | Count |
 |--------|-------|
-| Total Analyzed | 25 |
+| Total Analyzed | 32 |
 | Won | 0 |
 | Lost | 0 |
 | Pending | 0 |

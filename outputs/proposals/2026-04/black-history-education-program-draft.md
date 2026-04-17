@@ -3,7 +3,7 @@ grant_id: GRANT-2026-019
 funder: National Endowment for the Humanities
 amount: 30000
 status: template ready
-generated: 2026-04-17T15:06:35.350989
+generated: 2026-04-17T15:39:23.519778
 ---
 
 # Black History Education Program - Proposal Draft

@@ -5,7 +5,7 @@ amount: 65000
 deadline: 2026-05-12
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.289538
+generated: 2026-04-17T15:39:23.468890
 ---
 
 # Youth Policy Advocacy Training

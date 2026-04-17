@@ -5,7 +5,7 @@ amount: 75000
 deadline: 2026-06-01
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.287733
+generated: 2026-04-17T15:39:23.466867
 ---
 
 # Community Arts Programming Initiative

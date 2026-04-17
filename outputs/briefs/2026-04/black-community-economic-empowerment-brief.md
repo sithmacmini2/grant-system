@@ -5,7 +5,7 @@ amount: 100000
 deadline: 2026-06-16
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.287949
+generated: 2026-04-17T15:39:23.467179
 ---
 
 # Black Community Economic Empowerment

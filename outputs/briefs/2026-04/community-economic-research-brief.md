@@ -5,7 +5,7 @@ amount: 45000
 deadline: 2026-05-29
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.291954
+generated: 2026-04-17T15:39:23.470989
 ---
 
 # Community Economic Research

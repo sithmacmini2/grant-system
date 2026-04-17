@@ -5,7 +5,7 @@ amount: 90000
 deadline: 2026-07-01
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.291707
+generated: 2026-04-17T15:39:23.470800
 ---
 
 # Leadership Development Institute

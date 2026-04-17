@@ -26,6 +26,13 @@
 | 20 | Leadership Development Institu | Kellogg Foundation | $90k | 74 | 4 | LOW | new |
 | 21 | Community Economic Research | Brookings Institutio | $45k | 41 | 4 | LOW | new |
 | 22 | Youth Radio Production Trainin | Corporation for Publ | $25k | 32 | 4 | LOW | new |
-| 23 | Youth Summer Employment Progra | Department of Labor | $150k | 13 | 3 | LOW | new |
-| 24 | Youth Creative Writing Worksho | National Book Founda | $10k | 9 | 3 | LOW | new |
-| 25 | Micro-Grant Program for Small  | Funder for Change | $10k | 4 | 3 | LOW | new |
+| 23 | Rhode Island Foundation Commun | Rhode Island Foundat | $50k | 43 | 4 | LOW | new |
+| 24 | Kellogg Foundation Community G | Kellogg Foundation | $250k | 43 | 4 | LOW | new |
+| 25 | Youth Summer Employment Progra | Department of Labor | $150k | 13 | 3 | LOW | new |
+| 26 | Youth Creative Writing Worksho | National Book Founda | $10k | 9 | 3 | LOW | new |
+| 27 | Micro-Grant Program for Small  | Funder for Change | $10k | 4 | 3 | LOW | new |
+| 28 | National Endowment for the Art | National Endowment f | $75k | 43 | 2 | LOW | new |
+| 29 | Robert Wood Johnson Foundation | Robert Wood Johnson  | $100k | 43 | 2 | LOW | new |
+| 30 | Ford Foundation Community Gran | Ford Foundation | $80k | 43 | 2 | LOW | new |
+| 31 | Annie E. Casey Foundation Comm | Annie E. Casey Found | $65k | 43 | 2 | LOW | new |
+| 32 | Blue Cross Blue Shield of RI C | Blue Cross Blue Shie | $55k | 43 | 2 | LOW | new |

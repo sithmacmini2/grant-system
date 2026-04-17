@@ -1040,5 +1040,266 @@
       "confidence_level": "MEDIUM",
       "recommendation": "Track only"
     }
+  },
+  {
+    "grant_id": "FOUND-001",
+    "name": "Rhode Island Foundation Community Grant",
+    "funder": "Rhode Island Foundation",
+    "deadline": "2026-05-31",
+    "amount": 50000,
+    "amount_min": 35000.0,
+    "amount_max": 65000.0,
+    "criteria": "501(c)(3) nonprofits focused on community development",
+    "url": "https://www.rhodeislandfoundation.org/grants",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:39:01.074625",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 43,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development | Significant funding opportunity ($50,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "FOUND-002",
+    "name": "National Endowment for the Arts Community Grant",
+    "funder": "National Endowment for the Arts",
+    "deadline": "2026-05-31",
+    "amount": 75000,
+    "amount_min": 52500.0,
+    "amount_max": 97500.0,
+    "criteria": "501(c)(3) nonprofits focused on arts development",
+    "url": "https://www.nationalendowmentforthearts.org/grants",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:39:01.074674",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [],
+        "budget_size": null,
+        "focus_areas": []
+      },
+      "days_remaining": 43,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 2,
+      "strategic_reasoning": "Significant funding opportunity ($75,000)",
+      "pattern_matches": [
+        "Cultural programming pattern"
+      ],
+      "confidence_level": "LOW",
+      "recommendation": "Skip"
+    }
+  },
+  {
+    "grant_id": "FOUND-003",
+    "name": "Robert Wood Johnson Foundation Community Grant",
+    "funder": "Robert Wood Johnson Foundation",
+    "deadline": "2026-05-31",
+    "amount": 100000,
+    "amount_min": 70000.0,
+    "amount_max": 130000.0,
+    "criteria": "501(c)(3) nonprofits focused on health development",
+    "url": "https://www.robertwoodjohnsonfoundation.org/grants",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:39:01.074695",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [],
+        "budget_size": null,
+        "focus_areas": []
+      },
+      "days_remaining": 43,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 2,
+      "strategic_reasoning": "Significant funding opportunity ($100,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "LOW",
+      "recommendation": "Skip"
+    }
+  },
+  {
+    "grant_id": "FOUND-004",
+    "name": "Kellogg Foundation Community Grant",
+    "funder": "Kellogg Foundation",
+    "deadline": "2026-05-31",
+    "amount": 250000,
+    "amount_min": 175000.0,
+    "amount_max": 325000.0,
+    "criteria": "501(c)(3) nonprofits focused on community development",
+    "url": "https://www.kelloggfoundation.org/grants",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:39:01.074711",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 43,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development | Significant funding opportunity ($250,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "FOUND-005",
+    "name": "Ford Foundation Community Grant",
+    "funder": "Ford Foundation",
+    "deadline": "2026-05-31",
+    "amount": 80000,
+    "amount_min": 56000.0,
+    "amount_max": 104000.0,
+    "criteria": "501(c)(3) nonprofits focused on social development",
+    "url": "https://www.fordfoundation.org/grants",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:39:01.074726",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [],
+        "budget_size": null,
+        "focus_areas": []
+      },
+      "days_remaining": 43,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 2,
+      "strategic_reasoning": "Significant funding opportunity ($80,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "LOW",
+      "recommendation": "Skip"
+    }
+  },
+  {
+    "grant_id": "FOUND-006",
+    "name": "Annie E. Casey Foundation Community Grant",
+    "funder": "Annie E. Casey Foundation",
+    "deadline": "2026-05-31",
+    "amount": 65000,
+    "amount_min": 45500.0,
+    "amount_max": 84500.0,
+    "criteria": "501(c)(3) nonprofits focused on youth development",
+    "url": "https://www.anniee.caseyfoundation.org/grants",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:39:01.074742",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [],
+        "budget_size": null,
+        "focus_areas": []
+      },
+      "days_remaining": 43,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 2,
+      "strategic_reasoning": "Significant funding opportunity ($65,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "LOW",
+      "recommendation": "Skip"
+    }
+  },
+  {
+    "grant_id": "FOUND-007",
+    "name": "Blue Cross Blue Shield of RI Community Grant",
+    "funder": "Blue Cross Blue Shield of RI",
+    "deadline": "2026-05-31",
+    "amount": 55000,
+    "amount_min": 38500.0,
+    "amount_max": 71500.0,
+    "criteria": "501(c)(3) nonprofits focused on health development",
+    "url": "https://www.bluecrossblueshieldofri.org/grants",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:39:01.074758",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [],
+        "budget_size": null,
+        "focus_areas": []
+      },
+      "days_remaining": 43,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 2,
+      "strategic_reasoning": "Significant funding opportunity ($55,000)",
+      "pattern_matches": [],
+      "confidence_level": "LOW",
+      "recommendation": "Skip"
+    }
   }
 ]

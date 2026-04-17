@@ -5,7 +5,7 @@ amount: 250000
 deadline: 2026-07-16
 fit_score: 6
 status: new
-generated: 2026-04-17T15:06:35.288127
+generated: 2026-04-17T15:39:23.467397
 ---
 
 # Philanthropy Education Program

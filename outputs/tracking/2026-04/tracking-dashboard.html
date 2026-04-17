@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grant Tracking Dashboard - MUSE Foundation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, sans-serif; background: linear-gradient(135deg, #1e3a5f 0%, #0f2027 100%); min-height: 100vh; color: #fff; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        .header { text-align: center; padding: 30px 0; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .header p { color: #94a3b8; font-size: 1.1rem; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-box { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 16px; padding: 25px; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s; }
+        .stat-box:hover { transform: translateY(-5px); }
+        .stat-number { font-size: 2.5rem; font-weight: bold; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { color: #94a3b8; margin-top: 5px; font-size: 0.9rem; }
+        
+        .section { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; margin-bottom: 25px; backdrop-filter: blur(10px); }
+        .section h2 { color: #e2e8f0; margin-bottom: 20px; font-size: 1.4rem; display: flex; align-items: center; gap: 10px; }
+        .section h2 .icon { font-size: 1.5rem; }
+        
+        .grant-card { background: rgba(255,255,255,0.08); border-radius: 12px; padding: 18px; margin-bottom: 12px; transition: all 0.3s; }
+        .grant-card:hover { background: rgba(255,255,255,0.12); transform: translateX(5px); }
+        
+        .grant-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .grant-name { font-weight: 600; font-size: 1rem; }
+        .days-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        
+        .grant-details { display: flex; gap: 20px; color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px; }
+        .grant-meta { display: flex; justify-content: space-between; font-size: 0.85rem; }
+        .fit-score { font-weight: 600; }
+        .recommendation { color: #94a3b8; }
+        
+        .timeline { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+        .timeline-item { padding: 8px 16px; background: rgba(255,255,255,0.1); border-radius: 20px; font-size: 0.85rem; }
+        
+        .refresh-btn { display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s; }
+        .refresh-btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
+        
+        .action-bar { text-align: center; margin: 30px 0; }
+        
+        .legend { display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #94a3b8; }
+        .legend-color { width: 12px; height: 12px; border-radius: 3px; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+        
+        .footer { text-align: center; color: #64748b; padding: 20px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Grant Tracking Dashboard</h1>
+            <p>The MUSE Foundation of Rhode Island</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">32</div>
+                <div class="stat-label">Total Grants</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">0</div>
+                <div class="stat-label">High Priority (7+)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Proposals Ready</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Urgent Deadlines</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">$2465k</div>
+                <div class="stat-label">Total Available</div>
+            </div>
+        </div>
+        
+        <div class="action-bar">
+            <a href="#" onclick="location.reload()" class="refresh-btn">🔄 Refresh Data</a>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item"><div class="legend-color" style="background:#ef4444;"></div> ≤7 days</div>
+            <div class="legend-item"><div class="legend-color" style="background:#f59e0b;"></div> 8-14 days</div>
+            <div class="legend-item"><div class="legend-color" style="background:#22c55e;"></div> Fit 7+</div>
+            <div class="legend-item"><div class="legend-color" style="background:#fbbf24;"></div> Fit 5-6</div>
+        </div>
+        
+        <div class="grid-2">
+            <div class="section">
+                <h2><span class="icon">⚠️</span> Urgent Deadlines (≤14 days)</h2>
+                
+        <div class="grant-card urgent" style="border-left: 4px solid #ef4444;">
+            <div class="grant-header">
+                <span class="grant-name">Micro-Grant Program for Small Nonprofits</span>
+                <span class="days-badge" style="background:#ef4444;">4 days</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Funder for Change</span>
+                <span class="amount">$10,000</span>
+                <span class="deadline">2026-04-22</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 3/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+        <div class="grant-card urgent" style="border-left: 4px solid #ef4444;">
+            <div class="grant-header">
+                <span class="grant-name">Juneteenth Celebration Grant</span>
+                <span class="days-badge" style="background:#ef4444;">6 days</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Rhode Island Council on the Arts</span>
+                <span class="amount">$15,000</span>
+                <span class="deadline">2026-04-24</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#fbbf24;">Fit: 5/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card urgent" style="border-left: 4px solid #f59e0b;">
+            <div class="grant-header">
+                <span class="grant-name">Youth Creative Writing Workshop</span>
+                <span class="days-badge" style="background:#f59e0b;">9 days</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">National Book Foundation</span>
+                <span class="amount">$10,000</span>
+                <span class="deadline">2026-04-27</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 3/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+        <div class="grant-card urgent" style="border-left: 4px solid #f59e0b;">
+            <div class="grant-header">
+                <span class="grant-name">Youth Summer Employment Program</span>
+                <span class="days-badge" style="background:#f59e0b;">13 days</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Department of Labor</span>
+                <span class="amount">$150,000</span>
+                <span class="deadline">2026-05-01</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 3/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+        <div class="grant-card urgent" style="border-left: 4px solid #f59e0b;">
+            <div class="grant-header">
+                <span class="grant-name">Youth Sports Recreation Program</span>
+                <span class="days-badge" style="background:#f59e0b;">14 days</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Nike Foundation</span>
+                <span class="amount">$35,000</span>
+                <span class="deadline">2026-05-02</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#fbbf24;">Fit: 5/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+            </div>
+            
+            <div class="section">
+                <h2><span class="icon">📋</span> All Grants (by deadline)</h2>
+                
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Micro-Grant Program for Small Nonprofits</span>
+                <span class="days-badge" style="background:#374151;">4d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Funder for Change</span>
+                <span class="amount">$10,000</span>
+                <span class="deadline">2026-04-22</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 3/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Juneteenth Celebration Grant</span>
+                <span class="days-badge" style="background:#374151;">6d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Rhode Island Council on t</span>
+                <span class="amount">$15,000</span>
+                <span class="deadline">2026-04-24</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#fbbf24;">Fit: 5/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Youth Creative Writing Workshop</span>
+                <span class="days-badge" style="background:#374151;">9d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">National Book Foundation</span>
+                <span class="amount">$10,000</span>
+                <span class="deadline">2026-04-27</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 3/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Youth Summer Employment Program</span>
+                <span class="days-badge" style="background:#374151;">13d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Department of Labor</span>
+                <span class="amount">$150,000</span>
+                <span class="deadline">2026-05-01</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 3/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Youth Sports Recreation Program</span>
+                <span class="days-badge" style="background:#374151;">14d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Nike Foundation</span>
+                <span class="amount">$35,000</span>
+                <span class="deadline">2026-05-02</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#fbbf24;">Fit: 5/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Community Mural Project</span>
+                <span class="days-badge" style="background:#374151;">17d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">National Trust for Histor</span>
+                <span class="amount">$20,000</span>
+                <span class="deadline">2026-05-05</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Cultural Heritage Preservation</span>
+                <span class="days-badge" style="background:#374151;">20d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">National Humanities Cente</span>
+                <span class="amount">$35,000</span>
+                <span class="deadline">2026-05-08</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Black History Education Program</span>
+                <span class="days-badge" style="background:#374151;">21d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">National Endowment for th</span>
+                <span class="amount">$30,000</span>
+                <span class="deadline">2026-05-09</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#fbbf24;">Fit: 6/10</span>
+                <span class="recommendation">Full application</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Youth Policy Advocacy Training</span>
+                <span class="days-badge" style="background:#374151;">24d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Annie E. Casey Foundation</span>
+                <span class="amount">$65,000</span>
+                <span class="deadline">2026-05-12</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Community Health Partnership</span>
+                <span class="days-badge" style="background:#374151;">27d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Blue Cross Blue Shield of</span>
+                <span class="amount">$55,000</span>
+                <span class="deadline">2026-05-15</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Youth Leadership Development Grant</span>
+                <span class="days-badge" style="background:#374151;">29d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Rhode Island Foundation</span>
+                <span class="amount">$50,000</span>
+                <span class="deadline">2026-05-17</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Youth Radio Production Training</span>
+                <span class="days-badge" style="background:#374151;">32d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Corporation for Public Br</span>
+                <span class="amount">$25,000</span>
+                <span class="deadline">2026-05-20</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Social Equity Research Initiative</span>
+                <span class="days-badge" style="background:#374151;">34d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Urban Institute</span>
+                <span class="amount">$60,000</span>
+                <span class="deadline">2026-05-22</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Youth Entrepreneurship Fund</span>
+                <span class="days-badge" style="background:#374151;">39d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Ewing Marion Kauffman Fou</span>
+                <span class="amount">$45,000</span>
+                <span class="deadline">2026-05-27</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Community Economic Research</span>
+                <span class="days-badge" style="background:#374151;">41d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Brookings Institution</span>
+                <span class="amount">$45,000</span>
+                <span class="deadline">2026-05-29</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Rhode Island Foundation Community Grant</span>
+                <span class="days-badge" style="background:#374151;">43d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Rhode Island Foundation</span>
+                <span class="amount">$50,000</span>
+                <span class="deadline">2026-05-31</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">National Endowment for the Arts Community Gra</span>
+                <span class="days-badge" style="background:#374151;">43d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">National Endowment for th</span>
+                <span class="amount">$75,000</span>
+                <span class="deadline">2026-05-31</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 2/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Robert Wood Johnson Foundation Community Gran</span>
+                <span class="days-badge" style="background:#374151;">43d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Robert Wood Johnson Found</span>
+                <span class="amount">$100,000</span>
+                <span class="deadline">2026-05-31</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 2/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Kellogg Foundation Community Grant</span>
+                <span class="days-badge" style="background:#374151;">43d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Kellogg Foundation</span>
+                <span class="amount">$250,000</span>
+                <span class="deadline">2026-05-31</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 4/10</span>
+                <span class="recommendation">Track only</span>
+            </div>
+        </div>
+        <div class="grant-card">
+            <div class="grant-header">
+                <span class="grant-name">Ford Foundation Community Grant</span>
+                <span class="days-badge" style="background:#374151;">43d</span>
+            </div>
+            <div class="grant-details">
+                <span class="funder">Ford Foundation</span>
+                <span class="amount">$80,000</span>
+                <span class="deadline">2026-05-31</span>
+            </div>
+            <div class="grant-meta">
+                <span class="fit-score" style="color:#ef4444;">Fit: 2/10</span>
+                <span class="recommendation">Skip</span>
+            </div>
+        </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2><span class="icon">🗓️</span> Timeline View</h2>
+            <div class="timeline">
+                <div class="timeline-item">This Week: 2 grants</div>
+                <div class="timeline-item">This Month: 11 grants</div>
+                <div class="timeline-item">Next 60 days: 26 grants</div>
+                <div class="timeline-item">Later: 6 grants</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Last updated: 2026-04-17 15:45:31 | 
+            <a href="/home/sithmm2_admin/wiki/Grants/2026/04-Active-Tracking.md" style="color:#667eea;">View in Obsidian</a> |
+            <a href="/home/sithmm2_admin/grants-system/dashboard.html" style="color:#667eea;">Full Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

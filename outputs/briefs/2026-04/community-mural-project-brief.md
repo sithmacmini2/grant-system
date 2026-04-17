@@ -5,7 +5,7 @@ amount: 20000
 deadline: 2026-05-05
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.289730
+generated: 2026-04-17T15:39:23.469072
 ---
 
 # Community Mural Project

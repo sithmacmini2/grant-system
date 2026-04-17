@@ -5,7 +5,7 @@ amount: 15000
 deadline: 2026-04-24
 fit_score: 5
 status: new
-generated: 2026-04-17T15:06:35.289178
+generated: 2026-04-17T15:39:23.468542
 ---
 
 # Juneteenth Celebration Grant

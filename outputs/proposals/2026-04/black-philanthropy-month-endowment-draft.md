@@ -3,7 +3,7 @@ grant_id: GRANT-2026-014
 funder: Vermont Community Foundation
 amount: 30000
 status: template ready
-generated: 2026-04-17T15:06:35.350774
+generated: 2026-04-17T15:39:23.519584
 ---
 
 # Black Philanthropy Month Endowment - Proposal Draft

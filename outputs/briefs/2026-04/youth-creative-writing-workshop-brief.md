@@ -5,7 +5,7 @@ amount: 10000
 deadline: 2026-04-27
 fit_score: 3
 status: new
-generated: 2026-04-17T15:06:35.290506
+generated: 2026-04-17T15:39:23.469761
 ---
 
 # Youth Creative Writing Workshop

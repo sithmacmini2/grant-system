@@ -5,7 +5,7 @@ amount: 25000
 deadline: 2026-05-20
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.292168
+generated: 2026-04-17T15:39:23.471162
 ---
 
 # Youth Radio Production Training

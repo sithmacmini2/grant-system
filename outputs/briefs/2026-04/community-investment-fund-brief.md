@@ -5,7 +5,7 @@ amount: 150000
 deadline: 2026-06-26
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.291274
+generated: 2026-04-17T15:39:23.470460
 ---
 
 # Community Investment Fund

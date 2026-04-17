@@ -5,7 +5,7 @@ amount: 55000
 deadline: 2026-05-15
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.290685
+generated: 2026-04-17T15:39:23.469944
 ---
 
 # Community Health Partnership

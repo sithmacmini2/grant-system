@@ -5,7 +5,7 @@ amount: 80000
 deadline: 2026-06-11
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.288659
+generated: 2026-04-17T15:39:23.468006
 ---
 
 # Community Capacity Building

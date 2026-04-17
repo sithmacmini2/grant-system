@@ -5,7 +5,7 @@ amount: 40000
 deadline: 2026-06-06
 fit_score: 4
 status: new
-generated: 2026-04-17T15:06:35.289339
+generated: 2026-04-17T15:39:23.468715
 ---
 
 # Nonprofit Capacity Enhancement
