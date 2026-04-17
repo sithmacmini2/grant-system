@@ -1,0 +1,1044 @@
+[
+  {
+    "grant_id": "GRANT-2026-001",
+    "name": "Youth Leadership Development Grant",
+    "funder": "Rhode Island Foundation",
+    "deadline": "2026-05-17",
+    "amount": 50000,
+    "amount_min": 35000.0,
+    "amount_max": 65000.0,
+    "criteria": "501(c)(3) nonprofits focused on youth leadership. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-1",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Youth leadership"
+        ]
+      },
+      "days_remaining": 29,
+      "urgency_level": "MEDIUM",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Youth leadership | Significant funding opportunity ($50,000)",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-002",
+    "name": "Community Arts Programming Initiative",
+    "funder": "National Endowment for the Arts",
+    "deadline": "2026-06-01",
+    "amount": 75000,
+    "amount_min": 52500.0,
+    "amount_max": 97500.0,
+    "criteria": "501(c)(3) nonprofits focused on cultural programming. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-2",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Cultural programming"
+        ]
+      },
+      "days_remaining": 44,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Cultural programming | Significant funding opportunity ($75,000)",
+      "pattern_matches": [
+        "Cultural programming pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-003",
+    "name": "Black Community Economic Empowerment",
+    "funder": "Robert Wood Johnson Foundation",
+    "deadline": "2026-06-16",
+    "amount": 100000,
+    "amount_min": 70000.0,
+    "amount_max": 130000.0,
+    "criteria": "501(c)(3) nonprofits focused on community development. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-3",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 59,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development | Significant funding opportunity ($100,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-004",
+    "name": "Philanthropy Education Program",
+    "funder": "Kellogg Foundation",
+    "deadline": "2026-07-16",
+    "amount": 250000,
+    "amount_min": 175000.0,
+    "amount_max": 325000.0,
+    "criteria": "501(c)(3) nonprofits focused on philanthropy education. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-4",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Philanthropy education",
+          "Education"
+        ]
+      },
+      "days_remaining": 89,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 6,
+      "strategic_reasoning": "Aligns with MUSE focus: Philanthropy education, Education | Significant funding opportunity ($250,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Start draft"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-005",
+    "name": "Youth Summer Employment Program",
+    "funder": "Department of Labor",
+    "deadline": "2026-05-01",
+    "amount": 150000,
+    "amount_min": 105000.0,
+    "amount_max": 195000.0,
+    "criteria": "501(c)(3) nonprofits focused on youth employment. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-5",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": []
+      },
+      "days_remaining": 13,
+      "urgency_level": "HIGH",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 3,
+      "strategic_reasoning": "Significant funding opportunity ($150,000)",
+      "pattern_matches": [
+        "Government funding pattern",
+        "Youth programming pattern"
+      ],
+      "confidence_level": "LOW",
+      "recommendation": "Skip"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-006",
+    "name": "Cultural Heritage Preservation",
+    "funder": "National Humanities Center",
+    "deadline": "2026-05-08",
+    "amount": 35000,
+    "amount_min": 24500.0,
+    "amount_max": 45500.0,
+    "criteria": "501(c)(3) nonprofits focused on cultural programming. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-6",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Cultural programming"
+        ]
+      },
+      "days_remaining": 20,
+      "urgency_level": "MEDIUM",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Cultural programming",
+      "pattern_matches": [],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-007",
+    "name": "Community Capacity Building",
+    "funder": "Ford Foundation",
+    "deadline": "2026-06-11",
+    "amount": 80000,
+    "amount_min": 56000.0,
+    "amount_max": 104000.0,
+    "criteria": "501(c)(3) nonprofits focused on community development. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-7",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 54,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development | Significant funding opportunity ($80,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-008",
+    "name": "Youth Entrepreneurship Fund",
+    "funder": "Ewing Marion Kauffman Foundation",
+    "deadline": "2026-05-27",
+    "amount": 45000,
+    "amount_min": 31499.999999999996,
+    "amount_max": 58500.0,
+    "criteria": "501(c)(3) nonprofits focused on youth leadership. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-8",
+    "source_db": "grants-gov",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Youth leadership"
+        ]
+      },
+      "days_remaining": 39,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Youth leadership",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-009",
+    "name": "Social Equity Research Initiative",
+    "funder": "Urban Institute",
+    "deadline": "2026-05-22",
+    "amount": 60000,
+    "amount_min": 42000.0,
+    "amount_max": 78000.0,
+    "criteria": "501(c)(3) nonprofits focused on social equity. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-9",
+    "source_db": "grants-gov",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Social equity"
+        ]
+      },
+      "days_remaining": 34,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Social equity | Significant funding opportunity ($60,000)",
+      "pattern_matches": [],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-010",
+    "name": "Juneteenth Celebration Grant",
+    "funder": "Rhode Island Council on the Arts",
+    "deadline": "2026-04-24",
+    "amount": 15000,
+    "amount_min": 10500.0,
+    "amount_max": 19500.0,
+    "criteria": "501(c)(3) nonprofits focused on cultural programming. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-10",
+    "source_db": "grants-gov",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Cultural programming"
+        ]
+      },
+      "days_remaining": 6,
+      "urgency_level": "HIGH",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 5,
+      "strategic_reasoning": "Aligns with MUSE focus: Cultural programming",
+      "pattern_matches": [
+        "Cultural programming pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-011",
+    "name": "Nonprofit Capacity Enhancement",
+    "funder": "Pacific Foundation",
+    "deadline": "2026-06-06",
+    "amount": 40000,
+    "amount_min": 28000.0,
+    "amount_max": 52000.0,
+    "criteria": "501(c)(3) nonprofits focused on community development. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-11",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 49,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-012",
+    "name": "Youth Policy Advocacy Training",
+    "funder": "Annie E. Casey Foundation",
+    "deadline": "2026-05-12",
+    "amount": 65000,
+    "amount_min": 45500.0,
+    "amount_max": 84500.0,
+    "criteria": "501(c)(3) nonprofits focused on youth leadership. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-12",
+    "source_db": "grants-gov",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Youth leadership"
+        ]
+      },
+      "days_remaining": 24,
+      "urgency_level": "MEDIUM",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Youth leadership | Significant funding opportunity ($65,000)",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-013",
+    "name": "Community Mural Project",
+    "funder": "National Trust for Historic Preservation",
+    "deadline": "2026-05-05",
+    "amount": 20000,
+    "amount_min": 14000.0,
+    "amount_max": 26000.0,
+    "criteria": "501(c)(3) nonprofits focused on cultural programming. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-13",
+    "source_db": "grants-gov",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Cultural programming"
+        ]
+      },
+      "days_remaining": 17,
+      "urgency_level": "MEDIUM",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Cultural programming",
+      "pattern_matches": [],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-014",
+    "name": "Black Philanthropy Month Endowment",
+    "funder": "Vermont Community Foundation",
+    "deadline": "2026-06-21",
+    "amount": 30000,
+    "amount_min": 21000.0,
+    "amount_max": 39000.0,
+    "criteria": "501(c)(3) nonprofits focused on philanthropy education. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-14",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Philanthropy education",
+          "Education"
+        ]
+      },
+      "days_remaining": 64,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 6,
+      "strategic_reasoning": "Aligns with MUSE focus: Philanthropy education, Education",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Community development pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Start draft"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-015",
+    "name": "Digital Literacy for Youth",
+    "funder": "Google.org",
+    "deadline": "2026-07-06",
+    "amount": 125000,
+    "amount_min": 87500.0,
+    "amount_max": 162500.0,
+    "criteria": "501(c)(3) nonprofits focused on youth leadership. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-15",
+    "source_db": "grants-gov",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Youth leadership"
+        ]
+      },
+      "days_remaining": 79,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Youth leadership | Significant funding opportunity ($125,000)",
+      "pattern_matches": [
+        "Youth programming pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-016",
+    "name": "Workforce Development Initiative",
+    "funder": "JPMorgan Chase Foundation",
+    "deadline": "2026-08-15",
+    "amount": 200000,
+    "amount_min": 140000.0,
+    "amount_max": 260000.0,
+    "criteria": "501(c)(3) nonprofits focused on community development. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-16",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 119,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development | Significant funding opportunity ($200,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-017",
+    "name": "Youth Creative Writing Workshop",
+    "funder": "National Book Foundation",
+    "deadline": "2026-04-27",
+    "amount": 10000,
+    "amount_min": 7000.0,
+    "amount_max": 13000.0,
+    "criteria": "501(c)(3) nonprofits focused on youth leadership. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-17",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Youth leadership"
+        ]
+      },
+      "days_remaining": 9,
+      "urgency_level": "HIGH",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 3,
+      "strategic_reasoning": "Aligns with MUSE focus: Youth leadership",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ],
+      "confidence_level": "LOW",
+      "recommendation": "Skip"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-018",
+    "name": "Community Health Partnership",
+    "funder": "Blue Cross Blue Shield of RI",
+    "deadline": "2026-05-15",
+    "amount": 55000,
+    "amount_min": 38500.0,
+    "amount_max": 71500.0,
+    "criteria": "501(c)(3) nonprofits focused on community development. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-18",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 27,
+      "urgency_level": "MEDIUM",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development | Significant funding opportunity ($55,000)",
+      "pattern_matches": [],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-019",
+    "name": "Black History Education Program",
+    "funder": "National Endowment for the Humanities",
+    "deadline": "2026-05-09",
+    "amount": 30000,
+    "amount_min": 21000.0,
+    "amount_max": 39000.0,
+    "criteria": "501(c)(3) nonprofits focused on philanthropy education. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-19",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Philanthropy education",
+          "Education"
+        ]
+      },
+      "days_remaining": 21,
+      "urgency_level": "MEDIUM",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 6,
+      "strategic_reasoning": "Aligns with MUSE focus: Philanthropy education, Education",
+      "pattern_matches": [],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Full application"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-020",
+    "name": "Youth Sports Recreation Program",
+    "funder": "Nike Foundation",
+    "deadline": "2026-05-02",
+    "amount": 35000,
+    "amount_min": 24500.0,
+    "amount_max": 45500.0,
+    "criteria": "501(c)(3) nonprofits focused on youth leadership. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-20",
+    "source_db": "grants-gov",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Youth leadership"
+        ]
+      },
+      "days_remaining": 14,
+      "urgency_level": "HIGH",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 5,
+      "strategic_reasoning": "Aligns with MUSE focus: Youth leadership",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-021",
+    "name": "Community Investment Fund",
+    "funder": "Local Initiatives Support Corporation",
+    "deadline": "2026-06-26",
+    "amount": 150000,
+    "amount_min": 105000.0,
+    "amount_max": 195000.0,
+    "criteria": "501(c)(3) nonprofits focused on community development. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-21",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 69,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development | Significant funding opportunity ($150,000)",
+      "pattern_matches": [],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-022",
+    "name": "Micro-Grant Program for Small Nonprofits",
+    "funder": "Funder for Change",
+    "deadline": "2026-04-22",
+    "amount": 10000,
+    "amount_min": 7000.0,
+    "amount_max": 13000.0,
+    "criteria": "501(c)(3) nonprofits focused on community development. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-22",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Community development"
+        ]
+      },
+      "days_remaining": 4,
+      "urgency_level": "HIGH",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 3,
+      "strategic_reasoning": "Aligns with MUSE focus: Community development",
+      "pattern_matches": [],
+      "confidence_level": "LOW",
+      "recommendation": "Skip"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-023",
+    "name": "Leadership Development Institute",
+    "funder": "Kellogg Foundation",
+    "deadline": "2026-07-01",
+    "amount": 90000,
+    "amount_min": 62999.99999999999,
+    "amount_max": 117000.0,
+    "criteria": "501(c)(3) nonprofits focused on youth leadership. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-23",
+    "source_db": "grants-gov",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Youth leadership"
+        ]
+      },
+      "days_remaining": 74,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Youth leadership | Significant funding opportunity ($90,000)",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-024",
+    "name": "Community Economic Research",
+    "funder": "Brookings Institution",
+    "deadline": "2026-05-29",
+    "amount": 45000,
+    "amount_min": 31499.999999999996,
+    "amount_max": 58500.0,
+    "criteria": "501(c)(3) nonprofits focused on social equity. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-24",
+    "source_db": "ri-grants",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Social equity"
+        ]
+      },
+      "days_remaining": 41,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Social equity",
+      "pattern_matches": [],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  },
+  {
+    "grant_id": "GRANT-2026-025",
+    "name": "Youth Radio Production Training",
+    "funder": "Corporation for Public Broadcasting",
+    "deadline": "2026-05-20",
+    "amount": 25000,
+    "amount_min": 17500.0,
+    "amount_max": 32500.0,
+    "criteria": "501(c)(3) nonprofits focused on youth leadership. Youth programming experience required.",
+    "url": "https://example.gov/grants/2026-25",
+    "source_db": "foundation-center",
+    "scraped_date": "2026-04-17T15:04:01Z",
+    "status": "new",
+    "enrichment": {
+      "eligibility": {
+        "org_type": [
+          "501(c)(3)"
+        ],
+        "geography": [
+          "Rhode Island"
+        ],
+        "budget_size": null,
+        "focus_areas": [
+          "Youth leadership"
+        ]
+      },
+      "days_remaining": 32,
+      "urgency_level": "LOW",
+      "known_rejections": false,
+      "past_success": false,
+      "funder_profile": null
+    },
+    "intelligence": {
+      "fit_score": 4,
+      "strategic_reasoning": "Aligns with MUSE focus: Youth leadership",
+      "pattern_matches": [
+        "Youth programming pattern"
+      ],
+      "confidence_level": "MEDIUM",
+      "recommendation": "Track only"
+    }
+  }
+]

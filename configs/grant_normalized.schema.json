@@ -1,0 +1,156 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Normalized Grant",
+  "description": "Schema for normalized grant data in the Grant Intelligence Workflow System",
+  "type": "object",
+  "required": [
+    "grant_id",
+    "name",
+    "funder",
+    "deadline",
+    "amount",
+    "url",
+    "source_db",
+    "scraped_date"
+  ],
+  "properties": {
+    "grant_id": {
+      "type": "string",
+      "description": "Unique identifier for the grant"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the grant program"
+    },
+    "funder": {
+      "type": "string",
+      "description": "Name of the funding organization"
+    },
+    "deadline": {
+      "type": "string",
+      "format": "date",
+      "description": "Application deadline in ISO 8601 format"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Grant amount in USD"
+    },
+    "amount_min": {
+      "type": "number",
+      "description": "Minimum grant amount"
+    },
+    "amount_max": {
+      "type": "number",
+      "description": "Maximum grant amount"
+    },
+    "criteria": {
+      "type": "string",
+      "description": "Eligibility and application criteria"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to grant information"
+    },
+    "source_db": {
+      "type": "string",
+      "description": "Source database identifier"
+    },
+    "scraped_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the grant was scraped"
+    },
+    "enrichment": {
+      "type": "object",
+      "properties": {
+        "eligibility": {
+          "type": "object",
+          "properties": {
+            "org_type": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Eligible organization types"
+            },
+            "geography": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Geographic focus"
+            },
+            "budget_size": {
+              "type": "string",
+              "description": "Organization budget size requirements"
+            },
+            "focus_areas": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Program focus areas"
+            }
+          }
+        },
+        "days_remaining": {
+          "type": "integer",
+          "description": "Days until deadline"
+        },
+        "urgency_level": {
+          "type": "string",
+          "enum": ["HIGH", "MEDIUM", "LOW"],
+          "description": "Urgency level based on deadline"
+        },
+        "known_rejections": {
+          "type": "boolean",
+          "description": "Whether organization has been rejected by this funder"
+        },
+        "past_success": {
+          "type": "boolean",
+          "description": "Whether organization has succeeded with this funder"
+        },
+        "funder_profile": {
+          "type": "object",
+          "properties": {
+            "name": {"type": "string"},
+            "type": {"type": "string"},
+            "typical_amount": {"type": "number"},
+            "focus_areas": {"type": "array", "items": {"type": "string"}},
+            "past_grants": {"type": "array", "items": {"type": "string"}},
+            "contact_info": {"type": "string"},
+            "notes": {"type": "string"}
+          }
+        }
+      }
+    },
+    "intelligence": {
+      "type": "object",
+      "properties": {
+        "fit_score": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "description": "Fit score for organization"
+        },
+        "strategic_reasoning": {
+          "type": "string",
+          "description": "Why this grant fits organization"
+        },
+        "pattern_matches": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Matching patterns from past successes"
+        },
+        "confidence_level": {
+          "type": "string",
+          "enum": ["HIGH", "MEDIUM", "LOW"]
+        },
+        "recommendation": {
+          "type": "string",
+          "enum": ["Start draft", "Full application", "Track only", "Skip"]
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["new", "updated", "active", "pending", "won", "lost", "archived"],
+      "description": "Current status of the grant"
+    }
+  }
+}

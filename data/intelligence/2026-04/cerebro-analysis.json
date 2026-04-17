@@ -1,0 +1,352 @@
+{
+  "scan_date": "2026-04-17T15:06:35.226229",
+  "grants_scanned": 25,
+  "patterns_identified": [
+    "Government funding pattern",
+    "Foundation grant pattern",
+    "Youth programming pattern",
+    "Cultural programming pattern",
+    "Community development pattern"
+  ],
+  "funders_clustered": {
+    "Rhode Island Foundation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "National Endowment for the Arts": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Robert Wood Johnson Foundation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Kellogg Foundation": {
+      "count": 2,
+      "total_fit": 10,
+      "avg_fit": 5.0
+    },
+    "Department of Labor": {
+      "count": 1,
+      "total_fit": 3,
+      "avg_fit": 3.0
+    },
+    "National Humanities Center": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Ford Foundation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Ewing Marion Kauffman Foundation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Urban Institute": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Rhode Island Council on the Arts": {
+      "count": 1,
+      "total_fit": 5,
+      "avg_fit": 5.0
+    },
+    "Pacific Foundation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Annie E. Casey Foundation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "National Trust for Historic Preservation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Vermont Community Foundation": {
+      "count": 1,
+      "total_fit": 6,
+      "avg_fit": 6.0
+    },
+    "Google.org": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "JPMorgan Chase Foundation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "National Book Foundation": {
+      "count": 1,
+      "total_fit": 3,
+      "avg_fit": 3.0
+    },
+    "Blue Cross Blue Shield of RI": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "National Endowment for the Humanities": {
+      "count": 1,
+      "total_fit": 6,
+      "avg_fit": 6.0
+    },
+    "Nike Foundation": {
+      "count": 1,
+      "total_fit": 5,
+      "avg_fit": 5.0
+    },
+    "Local Initiatives Support Corporation": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Funder for Change": {
+      "count": 1,
+      "total_fit": 3,
+      "avg_fit": 3.0
+    },
+    "Brookings Institution": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    },
+    "Corporation for Public Broadcasting": {
+      "count": 1,
+      "total_fit": 4,
+      "avg_fit": 4.0
+    }
+  },
+  "gap_analysis": [],
+  "grants": [
+    {
+      "grant_id": "GRANT-2026-001",
+      "name": "Youth Leadership Development Grant",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-002",
+      "name": "Community Arts Programming Initiative",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Cultural programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-003",
+      "name": "Black Community Economic Empowerment",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-004",
+      "name": "Philanthropy Education Program",
+      "fit_score": 6,
+      "recommendation": "Start draft",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-005",
+      "name": "Youth Summer Employment Program",
+      "fit_score": 3,
+      "recommendation": "Skip",
+      "pattern_matches": [
+        "Government funding pattern",
+        "Youth programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-006",
+      "name": "Cultural Heritage Preservation",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": []
+    },
+    {
+      "grant_id": "GRANT-2026-007",
+      "name": "Community Capacity Building",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-008",
+      "name": "Youth Entrepreneurship Fund",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-009",
+      "name": "Social Equity Research Initiative",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": []
+    },
+    {
+      "grant_id": "GRANT-2026-010",
+      "name": "Juneteenth Celebration Grant",
+      "fit_score": 5,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Cultural programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-011",
+      "name": "Nonprofit Capacity Enhancement",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-012",
+      "name": "Youth Policy Advocacy Training",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-013",
+      "name": "Community Mural Project",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": []
+    },
+    {
+      "grant_id": "GRANT-2026-014",
+      "name": "Black Philanthropy Month Endowment",
+      "fit_score": 6,
+      "recommendation": "Start draft",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Community development pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-015",
+      "name": "Digital Literacy for Youth",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Youth programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-016",
+      "name": "Workforce Development Initiative",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-017",
+      "name": "Youth Creative Writing Workshop",
+      "fit_score": 3,
+      "recommendation": "Skip",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-018",
+      "name": "Community Health Partnership",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": []
+    },
+    {
+      "grant_id": "GRANT-2026-019",
+      "name": "Black History Education Program",
+      "fit_score": 6,
+      "recommendation": "Full application",
+      "pattern_matches": []
+    },
+    {
+      "grant_id": "GRANT-2026-020",
+      "name": "Youth Sports Recreation Program",
+      "fit_score": 5,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern",
+        "Youth programming pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-021",
+      "name": "Community Investment Fund",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": []
+    },
+    {
+      "grant_id": "GRANT-2026-022",
+      "name": "Micro-Grant Program for Small Nonprofits",
+      "fit_score": 3,
+      "recommendation": "Skip",
+      "pattern_matches": []
+    },
+    {
+      "grant_id": "GRANT-2026-023",
+      "name": "Leadership Development Institute",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Foundation grant pattern"
+      ]
+    },
+    {
+      "grant_id": "GRANT-2026-024",
+      "name": "Community Economic Research",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": []
+    },
+    {
+      "grant_id": "GRANT-2026-025",
+      "name": "Youth Radio Production Training",
+      "fit_score": 4,
+      "recommendation": "Track only",
+      "pattern_matches": [
+        "Youth programming pattern"
+      ]
+    }
+  ]
+}

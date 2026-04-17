@@ -1,0 +1,26 @@
+rank,grant_name,funder,amount_k,deadline_days,fit_score,effort_level,status,link
+25,Philanthropy Education Program,Kellogg Foundation,250,89,6,MEDIUM,new,https://example.gov/grants/2026-4
+25,Black Philanthropy Month Endowment,Vermont Community Foundation,30,64,6,MEDIUM,new,https://example.gov/grants/2026-14
+25,Black History Education Program,National Endowment for the Hum,30,21,6,MEDIUM,new,https://example.gov/grants/2026-19
+25,Juneteenth Celebration Grant,Rhode Island Council on the Ar,15,6,5,LOW,new,https://example.gov/grants/2026-10
+25,Youth Sports Recreation Program,Nike Foundation,35,14,5,LOW,new,https://example.gov/grants/2026-20
+25,Youth Leadership Development Grant,Rhode Island Foundation,50,29,4,LOW,new,https://example.gov/grants/2026-1
+25,Community Arts Programming Initiative,National Endowment for the Art,75,44,4,LOW,new,https://example.gov/grants/2026-2
+25,Black Community Economic Empowerment,Robert Wood Johnson Foundation,100,59,4,LOW,new,https://example.gov/grants/2026-3
+25,Cultural Heritage Preservation,National Humanities Center,35,20,4,LOW,new,https://example.gov/grants/2026-6
+25,Community Capacity Building,Ford Foundation,80,54,4,LOW,new,https://example.gov/grants/2026-7
+25,Youth Entrepreneurship Fund,Ewing Marion Kauffman Foundati,45,39,4,LOW,new,https://example.gov/grants/2026-8
+25,Social Equity Research Initiative,Urban Institute,60,34,4,LOW,new,https://example.gov/grants/2026-9
+25,Nonprofit Capacity Enhancement,Pacific Foundation,40,49,4,LOW,new,https://example.gov/grants/2026-11
+25,Youth Policy Advocacy Training,Annie E. Casey Foundation,65,24,4,LOW,new,https://example.gov/grants/2026-12
+25,Community Mural Project,National Trust for Historic Pr,20,17,4,LOW,new,https://example.gov/grants/2026-13
+25,Digital Literacy for Youth,Google.org,125,79,4,LOW,new,https://example.gov/grants/2026-15
+25,Workforce Development Initiative,JPMorgan Chase Foundation,200,119,4,LOW,new,https://example.gov/grants/2026-16
+25,Community Health Partnership,Blue Cross Blue Shield of RI,55,27,4,LOW,new,https://example.gov/grants/2026-18
+25,Community Investment Fund,Local Initiatives Support Corp,150,69,4,LOW,new,https://example.gov/grants/2026-21
+25,Leadership Development Institute,Kellogg Foundation,90,74,4,LOW,new,https://example.gov/grants/2026-23
+25,Community Economic Research,Brookings Institution,45,41,4,LOW,new,https://example.gov/grants/2026-24
+25,Youth Radio Production Training,Corporation for Public Broadca,25,32,4,LOW,new,https://example.gov/grants/2026-25
+25,Youth Summer Employment Program,Department of Labor,150,13,3,LOW,new,https://example.gov/grants/2026-5
+25,Youth Creative Writing Workshop,National Book Foundation,10,9,3,LOW,new,https://example.gov/grants/2026-17
+25,Micro-Grant Program for Small Nonprofits,Funder for Change,10,4,3,LOW,new,https://example.gov/grants/2026-22

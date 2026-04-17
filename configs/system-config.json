@@ -1,0 +1,70 @@
+{
+  "version": "1.0",
+  "system": "Grant Intelligence Workflow System",
+  "description": "Main configuration for grant research pipeline",
+  "organization": {
+    "name": "The MUSE Foundation of Rhode Island",
+    "type": "501(c)(3)",
+    "location": "Providence, RI",
+    "mission": "Enrich. Empower. Equip.",
+    "focus_areas": [
+      "Black and Brown community advancement",
+      "Youth leadership",
+      "Philanthropy education",
+      "Advocacy",
+      "Community-led initiatives",
+      "Cultural programming",
+      "Community development",
+      "Education",
+      "Social equity"
+    ],
+    "programs": [
+      "Rhode Island Black Philanthropy Month",
+      "Black Policy Month RI",
+      "YESpvd! youth programming",
+      "Juneteenth advocacy",
+      "MSVL Bridge Sunset Concert Series",
+      "Best In Black Community Awards",
+      "BLKGivin' micro-grants"
+    ]
+  },
+  "paths": {
+    "root": "/home/sithmm2_admin/grants-system",
+    "configs": "/home/sithmm2_admin/grants-system/configs",
+    "data": "/home/sithmm2_admin/grants-system/data",
+    "outputs": "/home/sithmm2_admin/grants-system/outputs",
+    "hermes_tasks": "/home/sithmm2_admin/grants-system/hermes-tasks",
+    "logs": "/home/sithmm2_admin/grants-system/logs",
+    "reports": "/home/sithmm2_admin/grants-system/reports",
+    "wiki": "/home/sithmm2_admin/wiki"
+  },
+  "telegram": {
+    "bot_token": "8114463389:AAEQPHmADS7olea-VM-0dIqYEOs2fEeVpzo",
+    "chat_id": "YOUR_CHAT_ID_HERE",
+    "enabled": true
+  },
+  "scoring": {
+    "fit_score_weights": {
+      "focus_alignment": 0.35,
+      "eligibility_match": 0.25,
+      "amount_appropriateness": 0.15,
+      "timeline_feasibility": 0.15,
+      "past_success_history": 0.10
+    },
+    "urgency_thresholds": {
+      "HIGH": 14,
+      "MEDIUM": 30,
+      "LOW": 60
+    }
+  },
+  "schedules": {
+    "weekly_deadline_check": "0 9 * * 1",
+    "monthly_research": "0 9 ? * FRI#1",
+    "quarterly_patterns": "0 9 1 1,4,7,10 *"
+  },
+  "data_retention": {
+    "raw_data_months": 6,
+    "enriched_data_months": 12,
+    "logs_months": 3
+  }
+}

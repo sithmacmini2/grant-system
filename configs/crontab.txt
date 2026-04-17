@@ -1,0 +1,11 @@
+# Grant Intelligence Workflow System - Cron Jobs
+# Add these to crontab: crontab -e
+
+# Weekly deadline check - Every Monday at 9:00 AM EST
+0 9 * * 1 cd /home/sithmm2_admin/grants-system && python3 hermes-tasks/weekly-deadline-check.py >> logs/weekly-alerts.log 2>&1
+
+# Monthly research - First Friday of each month at 9:00 AM EST
+0 9 1-7 * 5 cd /home/sithmm2_admin/grants-system && python3 hermes-tasks/monthly-research.py >> logs/monthly-research.log 2>&1
+
+# Quarterly patterns report - Jan 1, Apr 1, Jul 1, Oct 1 at 9:00 AM EST
+0 9 1 1,4,7,10 * cd /home/sithmm2_admin/grants-system && python3 hermes-tasks/quarterly-patterns.py >> logs/quarterly-reports.log 2>&1

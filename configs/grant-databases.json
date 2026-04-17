@@ -1,0 +1,212 @@
+{
+  "version": "1.0",
+  "description": "Opencode scraper configurations for grant databases",
+  "target_databases": [
+    {
+      "id": "grants-gov",
+      "name": "Grants.gov",
+      "type": "federal",
+      "base_url": "https://www.grants.gov/web/grants/search-grants.html",
+      "search_params": {
+        "query": "filterKeyword",
+        "oppStatuses": "open",
+        "dateRange": "postingDate"
+      },
+      "fields": {
+        "grant_id": "oppNumber",
+        "name": "title",
+        "funder": "agency",
+        "deadline": "closeDate",
+        "amount": "awardCeiling",
+        "amount_min": "awardFloor",
+        "criteria": "eligibility",
+        "url": " OPP_NUMBER"
+      },
+      "rate_limit": 10,
+      "enabled": true
+    },
+    {
+      "id": "foundation-center",
+      "name": "Foundation Center",
+      "type": "foundation",
+      "base_url": "https://foundationcenter.org",
+      "search_endpoint": "/grants-search/",
+      "fields": {
+        "grant_id": "grant_id",
+        "name": "grant_name",
+        "funder": "funder_name",
+        "deadline": "deadline",
+        "amount": "amount",
+        "criteria": "description",
+        "url": "url"
+      },
+      "api_key_required": true,
+      "rate_limit": 5,
+      "enabled": true
+    },
+    {
+      "id": "candid",
+      "name": "Candid (GuideStar)",
+      "type": "foundation",
+      "base_url": "https://candid.org",
+      "search_endpoint": "/grantsearch",
+      "fields": {
+        "grant_id": "id",
+        "name": "title",
+        "funder": "funder",
+        "deadline": "application_deadline",
+        "amount": "grant_amount",
+        "criteria": "eligibility_criteria",
+        "url": "link"
+      },
+      "api_key_required": true,
+      "rate_limit": 5,
+      "enabled": true
+    },
+    {
+      "id": "compasspoint",
+      "name": "CompassPoint",
+      "type": "foundation",
+      "base_url": "https://www.compasspoint.org",
+      "search_endpoint": "/grants",
+      "fields": {
+        "grant_id": "id",
+        "name": "title",
+        "funder": "sponsor",
+        "deadline": "due_date",
+        "amount": "total_available",
+        "criteria": "who_can_apply",
+        "url": "url"
+      },
+      "rate_limit": 5,
+      "enabled": true
+    },
+    {
+      "id": "ri-grants",
+      "name": "Rhode Island Grants",
+      "type": "state",
+      "base_url": "https://www.ri.gov/grants",
+      "search_params": {
+        "q": "search"
+      },
+      "fields": {
+        "grant_id": "grant_id",
+        "name": "title",
+        "funder": "agency",
+        "deadline": "close_date",
+        "amount": "award_amount",
+        "criteria": "eligibility",
+        "url": "url"
+      },
+      "geography": ["RI", "Rhode Island"],
+      "rate_limit": 5,
+      "enabled": true
+    },
+    {
+      "id": "mass-grants",
+      "name": "Massachusetts Grants",
+      "type": "state",
+      "base_url": "https://www.mass.gov/grants",
+      "search_params": {
+        "query": "keyword"
+      },
+      "fields": {
+        "grant_id": "id",
+        "name": "grant_name",
+        "funder": "granting_authority",
+        "deadline": "deadline_date",
+        "amount": "funding_amount",
+        "criteria": "eligibility_requirements",
+        "url": "application_link"
+      },
+      "geography": ["MA", "Massachusetts", "New England"],
+      "rate_limit": 5,
+      "enabled": true
+    },
+    {
+      "id": "ct-grants",
+      "name": "Connecticut Grants",
+      "type": "state",
+      "base_url": "https://portal.ct.gov/DOE/Grants",
+      "fields": {
+        "grant_id": "grant_number",
+        "name": "program_name",
+        "funder": "department",
+        "deadline": "application_deadline",
+        "amount": "allocation",
+        "criteria": "eligibility",
+        "url": "link"
+      },
+      "geography": ["CT", "Connecticut", "New England"],
+      "rate_limit": 5,
+      "enabled": true
+    },
+    {
+      "id": "urban-org",
+      "name": "Urban Institute",
+      "type": "research",
+      "base_url": "https://www.urban.org",
+      "search_endpoint": "/programs",
+      "fields": {
+        "grant_id": "program_id",
+        "name": "program_name",
+        "funder": "funder",
+        "deadline": "deadline",
+        "amount": "award_amount",
+        "criteria": "focus_areas",
+        "url": "page_url"
+      },
+      "rate_limit": 5,
+      "enabled": true
+    },
+    {
+      "id": "ncrp",
+      "name": "National Committee for Responsive Philanthropy",
+      "type": "policy",
+      "base_url": "https://ncrp.org",
+      "search_endpoint": "/grants-database",
+      "fields": {
+        "grant_id": "id",
+        "name": "grant_title",
+        "funder": "foundation",
+        "deadline": "due_date",
+        "amount": "grant_amount",
+        "criteria": "recipient_type",
+        "url": "grant_url"
+      },
+      "rate_limit": 5,
+      "enabled": true
+    },
+    {
+      "id": "council-foundations",
+      "name": "Council on Foundations",
+      "type": "association",
+      "base_url": "https://www.cof.org",
+      "search_endpoint": "/grant-search",
+      "fields": {
+        "grant_id": "grantId",
+        "name": "grantName",
+        "funder": "foundationName",
+        "deadline": "deadlineDate",
+        "amount": "grantAmount",
+        "criteria": " eligibility",
+        "url": "grantLink"
+      },
+      "api_key_required": true,
+      "rate_limit": 5,
+      "enabled": true
+    }
+  ],
+  "deduplication": {
+    "enabled": true,
+    "threshold": 0.85,
+    "fields": ["name", "funder", "amount"],
+    "fuzzy_matching": true
+  },
+  "global_settings": {
+    "timeout_seconds": 30,
+    "max_retries": 3,
+    "output_format": "json",
+    "output_path": "/home/sithmm2_admin/grants-system/data/raw/"
+  }
+}
