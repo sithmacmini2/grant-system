@@ -4,13 +4,13 @@ Layer 5 - Weekly Deadline Check
 Checks for grants with deadlines approaching and sends alerts.
 """
 
-import json
-import os
 import sys
 import logging
 from datetime import datetime
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import active_month, grants_path, wiki_path
+
+GRANTS_ROOT = grants_path()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -20,16 +20,15 @@ logger = logging.getLogger("weekly_deadline_check")
 
 def check_deadlines(month_str=None):
     """Check for upcoming deadlines and generate alert"""
-    if month_str is None:
-        month_str = datetime.now().strftime("%Y-%m")
+    month_str = active_month(month_str)
 
-    tracking_file = f"{GRANTS_ROOT}/outputs/tracking/{month_str}/active-tracking.md"
+    tracking_file = GRANTS_ROOT / "outputs" / "tracking" / month_str / "active-tracking.md"
 
-    if not os.path.exists(tracking_file):
+    if not tracking_file.exists():
         logger.warning(f"No tracking file found for {month_str}")
         return False
 
-    with open(tracking_file, "r") as f:
+    with tracking_file.open("r", encoding="utf-8") as f:
         content = f.read()
 
     urgent_grants = []
@@ -56,11 +55,11 @@ def check_deadlines(month_str=None):
     else:
         alert_msg += "No urgent deadlines this week. ✅"
 
-    alert_msg += f"\n\n📊 Review at: /wiki/Grants/2026/04-Active-Tracking.md"
+    alert_msg += f"\n\n📊 Review at: {wiki_path('Grants', month_str, 'active-tracking.md')}"
 
     logger.info(f"Alert message ready: {alert_msg[:100]}...")
 
-    with open(f"{GRANTS_ROOT}/logs/weekly-alerts.log", "a") as f:
+    with open(GRANTS_ROOT / "logs" / "weekly-alerts.log", "a") as f:
         f.write(
             f"{datetime.now().isoformat()} - Checked deadlines - Found {len(urgent_grants)} urgent\n"
         )

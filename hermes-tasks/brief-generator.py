@@ -10,7 +10,9 @@ import sys
 import logging
 from datetime import datetime
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import active_month, grants_path
+
+GRANTS_ROOT = grants_path()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -99,29 +101,28 @@ generated: {datetime.now().isoformat()}
 
 def generate_all_briefs(month_str=None):
     """Generate briefs for all grants"""
-    if month_str is None:
-        month_str = datetime.now().strftime("%Y-%m")
+    month_str = active_month(month_str)
 
-    enriched_file = f"{GRANTS_ROOT}/data/enriched/{month_str}/grants-enriched.json"
+    enriched_file = GRANTS_ROOT / "data" / "enriched" / month_str / "grants-enriched.json"
 
-    if not os.path.exists(enriched_file):
+    if not enriched_file.exists():
         logger.error(f"Enriched data not found: {enriched_file}")
         return False
 
-    with open(enriched_file, "r") as f:
+    with enriched_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
-    briefs_dir = f"{GRANTS_ROOT}/outputs/briefs/{month_str}"
-    os.makedirs(briefs_dir, exist_ok=True)
+    briefs_dir = GRANTS_ROOT / "outputs" / "briefs" / month_str
+    briefs_dir.mkdir(parents=True, exist_ok=True)
 
     logger.info(f"Generating {len(grants)} grant briefs")
 
     for grant in grants:
         brief = generate_brief(grant, month_str)
         slug = slugify(grant.get("name", "grant"))
-        filename = f"{briefs_dir}/{slug}-brief.md"
+        filename = briefs_dir / f"{slug}-brief.md"
 
-        with open(filename, "w") as f:
+        with filename.open("w", encoding="utf-8") as f:
             f.write(brief)
 
         logger.info(f"Generated brief: {filename}")

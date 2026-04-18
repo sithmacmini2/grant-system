@@ -1,6 +1,7 @@
 import importlib.util
 import json
 import os
+from datetime import datetime
 from pathlib import Path
 import tempfile
 import unittest
@@ -10,8 +11,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 BOT_PATH = REPO_ROOT / "hermes-tasks" / "telegram-bot.py"
 
 
-def load_bot_module(root, month="2026-04"):
+def load_bot_module(root, month=None):
+    month = month or datetime.now().strftime("%Y-%m")
     os.environ["GRANTS_ROOT"] = str(root)
+    os.environ["WIKI_ROOT"] = str(root / "wiki")
     os.environ["GRANTS_MONTH"] = month
     os.environ["TELEGRAM_BOT_TOKEN"] = "test-token"
 
@@ -30,6 +33,7 @@ class TelegramBotTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
+        self.month = datetime.now().strftime("%Y-%m")
         (self.root / "configs").mkdir()
         (self.root / "configs" / "system-config.json").write_text(
             json.dumps({"telegram": {"bot_token": ""}}),
@@ -45,6 +49,8 @@ class TelegramBotTests(unittest.TestCase):
         self.Bot = TestBot
 
     def tearDown(self):
+        for key in ["GRANTS_ROOT", "WIKI_ROOT", "GRANTS_MONTH", "TELEGRAM_BOT_TOKEN"]:
+            os.environ.pop(key, None)
         self.tmp.cleanup()
 
     def write_json(self, relative_path, data):
@@ -64,7 +70,7 @@ class TelegramBotTests(unittest.TestCase):
 
     def test_process_update_accepts_bot_suffix_and_advances_offset(self):
         self.write_text(
-            "outputs/briefs/2026-04/youth-summer-employment-program-brief.md",
+            f"outputs/briefs/{self.month}/youth-summer-employment-program-brief.md",
             "Youth summer brief body",
         )
         bot = self.Bot()
@@ -80,7 +86,7 @@ class TelegramBotTests(unittest.TestCase):
         self.assertIn("youth-summer-employment-program-brief.md", self.last_message(bot))
 
     def test_command_aliases_share_handlers(self):
-        self.write_text("outputs/matrix/2026-04/2026-04-grant-matrix.csv", "name,deadline")
+        self.write_text(f"outputs/matrix/{self.month}/{self.month}-grant-matrix.csv", "name,deadline")
         bot = self.Bot()
 
         bot.handle("rank-by-deadline", None, 123)
@@ -108,7 +114,7 @@ class TelegramBotTests(unittest.TestCase):
         self.assertEqual(bot.sent[2][1], "No urgent deadlines.")
 
     def test_invalid_json_falls_back_to_default(self):
-        path = self.root / "data/enriched/2026-04/grants-enriched.json"
+        path = self.root / "data/enriched" / self.month / "grants-enriched.json"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("{bad json", encoding="utf-8")
         bot = self.Bot()
@@ -120,7 +126,7 @@ class TelegramBotTests(unittest.TestCase):
 
     def test_research_returns_matching_grants(self):
         self.write_json(
-            "data/enriched/2026-04/grants-enriched.json",
+            f"data/enriched/{self.month}/grants-enriched.json",
             [
                 {
                     "name": "Youth Leadership Development Grant",
@@ -139,7 +145,7 @@ class TelegramBotTests(unittest.TestCase):
 
     def test_json_cache_reloads_when_file_changes(self):
         path = self.write_json(
-            "data/enriched/2026-04/grants-enriched.json",
+            f"data/enriched/{self.month}/grants-enriched.json",
             [{"name": "First"}],
         )
         bot = self.Bot()
@@ -158,6 +164,47 @@ class TelegramBotTests(unittest.TestCase):
 
         self.assertLessEqual(len(truncated), self.module.MAX_TELEGRAM_MESSAGE_LENGTH)
         self.assertTrue(truncated.endswith("[message truncated]"))
+
+    def test_archive_command_updates_status_and_writes_ledger(self):
+        now_iso = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        self.write_json(
+            f"data/enriched/{self.month}/grants-enriched.json",
+            [
+                {
+                    "grant_id": "g1",
+                    "name": "Archive Grant",
+                    "funder": "Sample Funders",
+                    "deadline": f"{datetime.now().year}-05-01",
+                    "amount": 1000,
+                    "url": "https://example.com",
+                    "source_db": "ri-grants",
+                    "scraped_date": now_iso,
+                    "status": "new",
+                }
+            ],
+        )
+        bot = self.Bot()
+
+        bot.handle("archive", "g1 won Selected for award", 123)
+
+        self.assertIn("Archived Archive Grant as won", self.last_message(bot))
+        updated = json.loads(
+            (self.root / "data/enriched" / self.month / "grants-enriched.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(updated[0]["status"], "won")
+        ledger = json.loads(
+            (
+                self.root
+                / "wiki"
+                / "Grants"
+                / self.month.split("-", 1)[0]
+                / "05-Archive"
+                / "ledger.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(ledger[0]["grant_id"], "g1")
+        self.assertEqual(ledger[0]["status"], "won")
+        self.assertEqual(ledger[0]["note"], "Selected for award")
 
 
 if __name__ == "__main__":

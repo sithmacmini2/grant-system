@@ -13,8 +13,12 @@ from difflib import SequenceMatcher
 import logging
 import yaml
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
-WIKI_ROOT = "/home/sithmm2_admin/wiki"
+from grants_context import active_month, grants_path, wiki_path
+from outcome_tracker import annotate_grants_with_outcomes
+from pipeline_validation import validate_grant_collection
+
+GRANTS_ROOT = grants_path()
+WIKI_ROOT = wiki_path()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -175,16 +179,15 @@ def deduplicate_grants(grants):
 
 def process_raw_grants(month_str=None):
     """Process raw grants and create enriched version"""
-    if month_str is None:
-        month_str = datetime.now().strftime("%Y-%m")
+    month_str = active_month(month_str)
 
-    raw_file = f"{GRANTS_ROOT}/data/raw/{month_str}/grants-raw.json"
+    raw_file = GRANTS_ROOT / "data" / "raw" / month_str / "grants-raw.json"
 
-    if not os.path.exists(raw_file):
+    if not raw_file.exists():
         logger.error(f"Raw data file not found: {raw_file}")
         return False
 
-    with open(raw_file, "r") as f:
+    with raw_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
     logger.info(f"Processing {len(grants)} grants from {raw_file}")
@@ -192,17 +195,22 @@ def process_raw_grants(month_str=None):
     wiki_funders = load_llm_wiki_funders()
 
     grants = deduplicate_grants(grants)
+    grants = annotate_grants_with_outcomes(grants)
 
     enriched_grants = []
     for grant in grants:
         enriched = enrich_grant(grant, wiki_funders)
         enriched_grants.append(enriched)
 
-    enriched_dir = f"{GRANTS_ROOT}/data/enriched/{month_str}"
-    os.makedirs(enriched_dir, exist_ok=True)
+    errors = validate_grant_collection(enriched_grants, stage="enriched")
+    if errors:
+        raise ValueError("Enriched grants failed validation:\n" + "\n".join(errors))
 
-    output_file = f"{enriched_dir}/grants-enriched.json"
-    with open(output_file, "w") as f:
+    enriched_dir = GRANTS_ROOT / "data" / "enriched" / month_str
+    enriched_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = enriched_dir / "grants-enriched.json"
+    with output_file.open("w", encoding="utf-8") as f:
         json.dump(enriched_grants, f, indent=2)
 
     logger.info(f"Enriched grants saved to {output_file}")

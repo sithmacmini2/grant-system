@@ -13,8 +13,15 @@ import signal
 import time
 import sys
 
-GRANTS_ROOT = Path(os.environ.get("GRANTS_ROOT", "/home/sithmm2_admin/grants-system"))
-CONFIG_PATH = GRANTS_ROOT / "configs" / "system-config.json"
+TASKS_DIR = Path(__file__).resolve().parent
+if str(TASKS_DIR) not in sys.path:
+    sys.path.insert(0, str(TASKS_DIR))
+
+from grants_context import active_month, config_path, grants_path
+from grant_archive import archive_grant
+
+GRANTS_ROOT = grants_path()
+CONFIG_PATH = config_path()
 LOG_DIR = GRANTS_ROOT / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -147,7 +154,8 @@ class Bot:
                     "/patterns or /pattern_scan\n"
                     "/research [keywords]\n"
                     "/brief or /grant_brief [name]\n"
-                    "/funder_intel [name]"
+                    "/funder_intel [name]\n"
+                    "/archive [grant_id] [won|lost|pending] [note]"
                 ),
             )
         elif cmd == "status":
@@ -177,12 +185,14 @@ class Bot:
             self.cmd_brief(chat_id, args)
         elif cmd == "funder_intel":
             self.cmd_funder(chat_id, args)
+        elif cmd == "archive":
+            self.cmd_archive(chat_id, args)
         else:
             self.send(chat_id, f"Unknown: {cmd}")
 
     def latest_month(self):
         if MONTH_OVERRIDE:
-            return MONTH_OVERRIDE
+            return active_month(MONTH_OVERRIDE)
 
         candidates = []
         for base in (
@@ -192,7 +202,7 @@ class Bot:
         ):
             if base.exists():
                 candidates.extend(p.name for p in base.iterdir() if p.is_dir())
-        return max(candidates) if candidates else datetime.now().strftime("%Y-%m")
+        return max(candidates) if candidates else active_month()
 
     def read_json(self, path, default):
         return self.cache.read(path, default)
@@ -324,6 +334,36 @@ class Bot:
                 f"Funder: {match}\n"
                 f"Grants tracked: {profile.get('count', 0)}\n"
                 f"Average fit: {profile.get('avg_fit', 0):.1f}"
+            ),
+        )
+
+    def cmd_archive(self, chat_id, args):
+        if not args:
+            self.send(chat_id, "Usage: /archive [grant_id] [won|lost|pending] [note]")
+            return
+
+        parts = args.split(" ", 2)
+        if len(parts) < 2:
+            self.send(chat_id, "Usage: /archive [grant_id] [won|lost|pending] [note]")
+            return
+
+        grant_id, status = parts[0].strip(), parts[1].strip().lower()
+        note = parts[2].strip() if len(parts) > 2 else None
+
+        try:
+            result = archive_grant(grant_id=grant_id, status=status, month_str=self.month, note=note)
+        except Exception as exc:
+            logger.error("Archive failed for %s: %s", grant_id, exc)
+            self.send(chat_id, f"Archive failed: {exc}")
+            return
+
+        grant = result.get("grant", {})
+        self.send(
+            chat_id,
+            (
+                f"Archived {grant.get('name', grant_id)} as {status}\n"
+                f"Note: {result.get('archive_note')}\n"
+                f"Ledger: {result.get('ledger_path')}"
             ),
         )
 

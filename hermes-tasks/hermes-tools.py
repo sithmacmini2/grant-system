@@ -7,7 +7,10 @@ Provides Hermes with tools to query grant data
 import json
 import os
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import active_month, grants_path
+from grant_archive import archive_grant as _archive_grant
+
+GRANTS_ROOT = grants_path()
 
 
 def get_tools():
@@ -33,15 +36,25 @@ def get_tools():
             "parameters": {},
             "returns": "List of proposal files",
         },
+        "grant_archive": {
+            "description": "Archive a grant outcome and persist an audit trail",
+            "parameters": {
+                "grant_id": "string",
+                "status": "string",
+                "note": "string (optional)",
+                "month": "string (optional)",
+            },
+            "returns": "Archived grant metadata and audit file paths",
+        },
     }
 
 
 def grant_status():
-    grants_file = f"{GRANTS_ROOT}/data/enriched/2026-04/grants-enriched.json"
-    if not os.path.exists(grants_file):
+    grants_file = GRANTS_ROOT / "data" / "enriched" / active_month() / "grants-enriched.json"
+    if not grants_file.exists():
         return {"error": "No grant data. Run research first."}
 
-    with open(grants_file) as f:
+    with grants_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
     return {
@@ -64,11 +77,11 @@ def grant_status():
 
 
 def grant_search(query):
-    grants_file = f"{GRANTS_ROOT}/data/enriched/2026-04/grants-enriched.json"
-    if not os.path.exists(grants_file):
+    grants_file = GRANTS_ROOT / "data" / "enriched" / active_month() / "grants-enriched.json"
+    if not grants_file.exists():
         return {"error": "No grant data"}
 
-    with open(grants_file) as f:
+    with grants_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
     results = []
@@ -88,11 +101,11 @@ def grant_search(query):
 
 
 def grant_urgent():
-    grants_file = f"{GRANTS_ROOT}/data/enriched/2026-04/grants-enriched.json"
-    if not os.path.exists(grants_file):
+    grants_file = GRANTS_ROOT / "data" / "enriched" / active_month() / "grants-enriched.json"
+    if not grants_file.exists():
         return {"error": "No grant data"}
 
-    with open(grants_file) as f:
+    with grants_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
     urgent = []
@@ -111,11 +124,15 @@ def grant_urgent():
 
 
 def grant_proposals():
-    proposals_dir = f"{GRANTS_ROOT}/outputs/proposals/2026-04"
-    if not os.path.exists(proposals_dir):
+    proposals_dir = GRANTS_ROOT / "outputs" / "proposals" / active_month()
+    if not proposals_dir.exists():
         return {"error": "No proposals generated"}
 
     return {"proposals": os.listdir(proposals_dir)}
+
+
+def grant_archive(grant_id, status, note=None, month=None):
+    return _archive_grant(grant_id=grant_id, status=status, month_str=month, note=note)
 
 
 if __name__ == "__main__":
@@ -130,6 +147,11 @@ if __name__ == "__main__":
         ),
         "grant_urgent": grant_urgent,
         "grant_proposals": grant_proposals,
+        "grant_archive": lambda: grant_archive(
+            sys.argv[2],
+            sys.argv[3] if len(sys.argv) > 3 else "won",
+            " ".join(sys.argv[4:]) if len(sys.argv) > 4 else None,
+        ),
     }
 
     if tool in funcs:

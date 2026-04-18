@@ -10,7 +10,9 @@ import sys
 import logging
 from datetime import datetime
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import active_month, grants_path
+
+GRANTS_ROOT = grants_path()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -20,16 +22,15 @@ logger = logging.getLogger("matrix_generator")
 
 def generate_matrix(month_str=None):
     """Generate comparative matrix for grants"""
-    if month_str is None:
-        month_str = datetime.now().strftime("%Y-%m")
+    month_str = active_month(month_str)
 
-    enriched_file = f"{GRANTS_ROOT}/data/enriched/{month_str}/grants-enriched.json"
+    enriched_file = GRANTS_ROOT / "data" / "enriched" / month_str / "grants-enriched.json"
 
-    if not os.path.exists(enriched_file):
+    if not enriched_file.exists():
         logger.error(f"Enriched data not found: {enriched_file}")
         return False
 
-    with open(enriched_file, "r") as f:
+    with enriched_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
     grants_sorted = sorted(
@@ -41,8 +42,8 @@ def generate_matrix(month_str=None):
     for rank, g in enumerate(grants_sorted, 1):
         g["rank"] = rank
 
-    matrix_dir = f"{GRANTS_ROOT}/outputs/matrix/{month_str}"
-    os.makedirs(matrix_dir, exist_ok=True)
+    matrix_dir = GRANTS_ROOT / "outputs" / "matrix" / month_str
+    matrix_dir.mkdir(parents=True, exist_ok=True)
 
     csv_content = "rank,grant_name,funder,amount_k,deadline_days,fit_score,effort_level,status,link\n"
 
@@ -67,8 +68,8 @@ def generate_matrix(month_str=None):
             f"{rank},{name},{funder},{amount_k},{days},{fit},{effort},{status},{link}\n"
         )
 
-    csv_file = f"{matrix_dir}/{month_str}-grant-matrix.csv"
-    with open(csv_file, "w") as f:
+    csv_file = matrix_dir / f"{month_str}-grant-matrix.csv"
+    with csv_file.open("w", encoding="utf-8") as f:
         f.write(csv_content)
 
     logger.info(f"CSV matrix saved to {csv_file}")
@@ -97,15 +98,12 @@ def generate_matrix(month_str=None):
 
         md_content += f"| {rank} | {name} | {funder} | ${amount_k}k | {days} | {fit} | {effort} | {status} |\n"
 
-    md_file = f"{matrix_dir}/{month_str}-grant-matrix.md"
-    with open(md_file, "w") as f:
+    md_file = matrix_dir / f"{month_str}-grant-matrix.md"
+    with md_file.open("w", encoding="utf-8") as f:
         f.write(md_content)
 
     logger.info(f"Markdown matrix saved to {md_file}")
 
-    monthly_landscape = (
-        f"{GRANTS_ROOT}/outputs/matrix/{month_str}-{month_str}-grant-matrix.md"
-    )
     logger.info(f"Comparative matrix generated for {len(grants)} grants")
     return True
 

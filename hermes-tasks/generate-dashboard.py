@@ -4,17 +4,18 @@ Dashboard Generator - Creates HTML dashboard from grant data
 """
 
 import json
-import os
 from datetime import datetime
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import active_month, grants_path
+
+GRANTS_ROOT = grants_path()
 
 
 def load_grants():
     """Load enriched grants"""
-    f = f"{GRANTS_ROOT}/data/enriched/2026-04/grants-enriched.json"
-    if os.path.exists(f):
-        with open(f) as fp:
+    f = GRANTS_ROOT / "data" / "enriched" / active_month() / "grants-enriched.json"
+    if f.exists():
+        with f.open("r", encoding="utf-8") as fp:
             return json.load(fp)
     return []
 
@@ -22,6 +23,8 @@ def load_grants():
 def generate_dashboard():
     """Generate HTML dashboard"""
     grants = load_grants()
+    month_str = active_month()
+    year = month_str.split("-", 1)[0]
 
     if not grants:
         print("No grant data found. Run monthly-research.py first.")
@@ -137,8 +140,8 @@ def generate_dashboard():
             <div class="stat-card"><div class="stat-number">${total_amount / 1000:.0f}k</div><div class="stat-label">Total Available</div></div>
         </div>
         <div class="actions">
-            <a href="/home/sithmm2_admin/wiki/Grants/2026/04-Active-Tracking.md" class="btn">📊 View Full Dashboard</a>
-            <a href="file:///home/sithmm2_admin/grants-system/outputs/matrix/2026-04/2026-04-grant-matrix.csv" class="btn">📋 Download CSV</a>
+            <a href="/home/sithmm2_admin/wiki/Grants/{year}/04-Active-Tracking.md" class="btn">📊 View Full Dashboard</a>
+            <a href="file:///home/sithmm2_admin/grants-system/outputs/matrix/{month_str}/{month_str}-grant-matrix.csv" class="btn">📋 Download CSV</a>
             <a href="#" class="btn" onclick="location.reload()">🔄 Refresh</a>
         </div>
         <div class="section" id="alerts">
@@ -166,8 +169,8 @@ def generate_dashboard():
 </body>
 </html>"""
 
-    output = f"{GRANTS_ROOT}/dashboard.html"
-    with open(output, "w") as f:
+    output = GRANTS_ROOT / "dashboard.html"
+    with output.open("w", encoding="utf-8") as f:
         f.write(html)
 
     print(f"✅ Dashboard generated: {output}")

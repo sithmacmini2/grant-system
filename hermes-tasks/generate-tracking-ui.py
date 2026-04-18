@@ -5,18 +5,20 @@ Creates an interactive HTML dashboard from grant data
 """
 
 import json
-import os
 from datetime import datetime
 from collections import defaultdict
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import active_month, grants_path, wiki_path
+
+GRANTS_ROOT = grants_path()
+WIKI_ROOT = wiki_path()
 
 
 def load_grants():
     """Load enriched grants"""
-    f = f"{GRANTS_ROOT}/data/enriched/2026-04/grants-enriched.json"
-    if os.path.exists(f):
-        with open(f) as fp:
+    f = GRANTS_ROOT / "data" / "enriched" / active_month() / "grants-enriched.json"
+    if f.exists():
+        with f.open("r", encoding="utf-8") as fp:
             return json.load(fp)
     return []
 
@@ -231,15 +233,17 @@ def generate_tracking_ui():
         
         <div class="footer">
             Last updated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} | 
-            <a href="/home/sithmm2_admin/wiki/Grants/2026/04-Active-Tracking.md" style="color:#667eea;">View in Obsidian</a> |
-            <a href="/home/sithmm2_admin/grants-system/dashboard.html" style="color:#667eea;">Full Dashboard</a>
+            <a href="{WIKI_ROOT}/Grants/{active_month()}/active-tracking.md" style="color:#667eea;">View in Obsidian</a> |
+            <a href="{GRANTS_ROOT}/dashboard.html" style="color:#667eea;">Full Dashboard</a>
         </div>
     </div>
 </body>
 </html>"""
 
-    output = f"{GRANTS_ROOT}/outputs/tracking/2026-04/tracking-dashboard.html"
-    with open(output, "w") as f:
+    output_dir = GRANTS_ROOT / "outputs" / "tracking" / active_month()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output = output_dir / "tracking-dashboard.html"
+    with output.open("w", encoding="utf-8") as f:
         f.write(html)
 
     print(f"✅ Tracking dashboard generated: {output}")

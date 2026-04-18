@@ -10,8 +10,10 @@ import sys
 import logging
 from datetime import datetime
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
-WIKI_ROOT = "/home/sithmm2_admin/wiki"
+from grants_context import active_month, grants_path, wiki_path
+
+GRANTS_ROOT = grants_path()
+WIKI_ROOT = wiki_path()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -32,6 +34,7 @@ def generate_proposal(grant, month_str):
     """Generate a proposal draft for a grant"""
     intel = grant.get("intelligence", {})
     enrichment = grant.get("enrichment", {})
+    archive_year = month_str.split("-", 1)[0]
 
     amount = grant.get("amount", 0)
     amount_str = f"${amount:,}" if amount else "TBD"
@@ -94,7 +97,7 @@ This project aligns with {grant.get("funder")}'s focus on [FUNDER FOCUS AREA] by
 
 ## Proposed Solution/Approach
 
-*INLINE NOTE: Structure from past successful proposals in /wiki/Grants/2025/Archive/Won/*
+*INLINE NOTE: Structure from past successful proposals in /wiki/Grants/{archive_year}/05-Archive/Won/*
 
 ### Program Design
 
@@ -114,7 +117,7 @@ This project aligns with {grant.get("funder")}'s focus on [FUNDER FOCUS AREA] by
 
 ## Evaluation & Metrics
 
-*INLINE NOTE: Reference /wiki/concepts/grant-strategy-q2-2026.md for metrics framework*
+*INLINE NOTE: Reference /wiki/concepts/grant-strategy.md for metrics framework*
 
 ### Outcomes
 
@@ -190,27 +193,26 @@ This project aligns with {grant.get("funder")}'s focus on [FUNDER FOCUS AREA] by
 **INLINE NOTES:**
 - Sections marked with "INLINE NOTE" require custom data before submission
 - Reference Obsidian vault at /wiki/ for organizational data
-- Past successful proposals in /wiki/Grants/2025/05-Archive/Won/ for templates
+- Past successful proposals in /wiki/Grants/{archive_year}/05-Archive/Won/ for templates
 """
     return proposal
 
 
 def generate_proposals(month_str=None):
     """Generate proposals for high-fit grants"""
-    if month_str is None:
-        month_str = datetime.now().strftime("%Y-%m")
+    month_str = active_month(month_str)
 
-    enriched_file = f"{GRANTS_ROOT}/data/enriched/{month_str}/grants-enriched.json"
+    enriched_file = GRANTS_ROOT / "data" / "enriched" / month_str / "grants-enriched.json"
 
-    if not os.path.exists(enriched_file):
+    if not enriched_file.exists():
         logger.error(f"Enriched data not found: {enriched_file}")
         return False
 
-    with open(enriched_file, "r") as f:
+    with enriched_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
-    proposals_dir = f"{GRANTS_ROOT}/outputs/proposals/{month_str}"
-    os.makedirs(proposals_dir, exist_ok=True)
+    proposals_dir = GRANTS_ROOT / "outputs" / "proposals" / month_str
+    proposals_dir.mkdir(parents=True, exist_ok=True)
 
     generated = 0
     for grant in grants:
@@ -220,9 +222,9 @@ def generate_proposals(month_str=None):
         if fit_score >= 6:
             proposal = generate_proposal(grant, month_str)
             slug = slugify(grant.get("name", "grant"))
-            filename = f"{proposals_dir}/{slug}-draft.md"
+            filename = proposals_dir / f"{slug}-draft.md"
 
-            with open(filename, "w") as f:
+            with filename.open("w", encoding="utf-8") as f:
                 f.write(proposal)
 
             logger.info(f"Generated proposal: {filename}")

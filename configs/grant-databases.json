@@ -6,6 +6,8 @@
       "id": "grants-gov",
       "name": "Grants.gov",
       "type": "federal",
+      "parse_mode": "table",
+      "query_terms": ["community", "youth", "black"],
       "base_url": "https://www.grants.gov/web/grants/search-grants.html",
       "search_params": {
         "query": "filterKeyword",
@@ -29,6 +31,8 @@
       "id": "foundation-center",
       "name": "Foundation Center",
       "type": "foundation",
+      "parse_mode": "cards",
+      "query_terms": ["community", "education", "youth"],
       "base_url": "https://foundationcenter.org",
       "search_endpoint": "/grants-search/",
       "fields": {
@@ -48,6 +52,8 @@
       "id": "candid",
       "name": "Candid (GuideStar)",
       "type": "foundation",
+      "parse_mode": "cards",
+      "query_terms": ["community", "equity", "philanthropy"],
       "base_url": "https://candid.org",
       "search_endpoint": "/grantsearch",
       "fields": {
@@ -67,6 +73,8 @@
       "id": "compasspoint",
       "name": "CompassPoint",
       "type": "foundation",
+      "parse_mode": "cards",
+      "query_terms": ["leadership", "community", "training"],
       "base_url": "https://www.compasspoint.org",
       "search_endpoint": "/grants",
       "fields": {
@@ -85,6 +93,8 @@
       "id": "ri-grants",
       "name": "Rhode Island Grants",
       "type": "state",
+      "parse_mode": "table",
+      "query_terms": ["RI", "community", "grant"],
       "base_url": "https://www.ri.gov/grants",
       "search_params": {
         "q": "search"
@@ -106,6 +116,8 @@
       "id": "mass-grants",
       "name": "Massachusetts Grants",
       "type": "state",
+      "parse_mode": "cards",
+      "query_terms": ["MA", "community", "grant"],
       "base_url": "https://www.mass.gov/grants",
       "search_params": {
         "query": "keyword"
@@ -127,6 +139,8 @@
       "id": "ct-grants",
       "name": "Connecticut Grants",
       "type": "state",
+      "parse_mode": "cards",
+      "query_terms": ["CT", "grant", "education"],
       "base_url": "https://portal.ct.gov/DOE/Grants",
       "fields": {
         "grant_id": "grant_number",
@@ -145,6 +159,8 @@
       "id": "urban-org",
       "name": "Urban Institute",
       "type": "research",
+      "parse_mode": "cards",
+      "query_terms": ["program", "research", "community"],
       "base_url": "https://www.urban.org",
       "search_endpoint": "/programs",
       "fields": {
@@ -163,6 +179,8 @@
       "id": "ncrp",
       "name": "National Committee for Responsive Philanthropy",
       "type": "policy",
+      "parse_mode": "cards",
+      "query_terms": ["grant", "philanthropy", "community"],
       "base_url": "https://ncrp.org",
       "search_endpoint": "/grants-database",
       "fields": {
@@ -181,6 +199,8 @@
       "id": "council-foundations",
       "name": "Council on Foundations",
       "type": "association",
+      "parse_mode": "cards",
+      "query_terms": ["foundation", "grant", "community"],
       "base_url": "https://www.cof.org",
       "search_endpoint": "/grant-search",
       "fields": {

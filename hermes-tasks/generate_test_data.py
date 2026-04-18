@@ -1,9 +1,14 @@
 import json
 import os
+import sys
 from datetime import datetime, timedelta
 import random
 
-GRANTS_SYSTEM_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import grants_path
+from grants_context import active_month
+from pipeline_validation import validate_grant_collection
+
+GRANTS_SYSTEM_ROOT = grants_path()
 TEST_GRANTS = [
     {
         "name": "Youth Leadership Development Grant",
@@ -183,8 +188,10 @@ TEST_GRANTS = [
 ]
 
 
-def generate_grants_json():
+def generate_grants_json(month_str=None):
     """Generate synthetic test grants JSON file"""
+    month_str = active_month(month_str)
+    year = month_str.split("-", 1)[0]
     grants = []
     base_date = datetime.now()
 
@@ -192,7 +199,7 @@ def generate_grants_json():
         deadline = base_date + timedelta(days=g["deadline_days"])
 
         grant = {
-            "grant_id": f"GRANT-{2026}-{i + 1:03d}",
+            "grant_id": f"GRANT-{year}-{i + 1:03d}",
             "name": g["name"],
             "funder": g["funder"],
             "deadline": deadline.strftime("%Y-%m-%d"),
@@ -200,7 +207,7 @@ def generate_grants_json():
             "amount_min": g["amount"] * 0.7,
             "amount_max": g["amount"] * 1.3,
             "criteria": f"501(c)(3) nonprofits focused on {g['focus']}. Youth programming experience required.",
-            "url": f"https://example.gov/grants/{2026}-{i + 1}",
+            "url": f"https://example.gov/grants/{year}-{i + 1}",
             "source_db": random.choice(
                 ["grants-gov", "foundation-center", "ri-grants"]
             ),
@@ -209,12 +216,16 @@ def generate_grants_json():
         }
         grants.append(grant)
 
-    month_str = base_date.strftime("%Y-%m")
-    output_dir = f"{GRANTS_SYSTEM_ROOT}/data/raw/{month_str}"
-    os.makedirs(output_dir, exist_ok=True)
+    errors = validate_grant_collection(grants, stage="raw")
+    if errors:
+        raise ValueError("Generated test data failed validation:\n" + "\n".join(errors))
 
-    output_file = f"{output_dir}/grants-raw.json"
-    with open(output_file, "w") as f:
+    month_str = active_month(month_str)
+    output_dir = GRANTS_SYSTEM_ROOT / "data" / "raw" / month_str
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = output_dir / "grants-raw.json"
+    with output_file.open("w", encoding="utf-8") as f:
         json.dump(grants, f, indent=2)
 
     print(f"Generated {len(grants)} test grants to {output_file}")
@@ -222,4 +233,5 @@ def generate_grants_json():
 
 
 if __name__ == "__main__":
-    generate_grants_json()
+    month_arg = sys.argv[1] if len(sys.argv) > 1 else None
+    generate_grants_json(month_arg)

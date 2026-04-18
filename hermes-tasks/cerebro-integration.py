@@ -12,8 +12,12 @@ import logging
 from datetime import datetime
 from difflib import SequenceMatcher
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
-WIKI_ROOT = "/home/sithmm2_admin/wiki"
+from grants_context import active_month, grants_path, wiki_path
+from outcome_tracker import annotate_grants_with_outcomes
+from pipeline_validation import validate_grant_collection
+
+GRANTS_ROOT = grants_path()
+WIKI_ROOT = wiki_path()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -46,18 +50,19 @@ PROGRAMS = [
 def load_past_outcomes():
     """Load historical grant outcomes from Obsidian"""
     outcomes = {"won": [], "lost": [], "pending": []}
-    archive_dir = f"{WIKI_ROOT}/Grants/2026/05-Archive"
+    month_str = active_month()
+    archive_dir = WIKI_ROOT / "Grants" / month_str.split("-", 1)[0] / "05-Archive"
 
-    if not os.path.exists(archive_dir):
+    if not archive_dir.exists():
         return outcomes
 
     for subdir in ["Won", "Lost"]:
-        path = os.path.join(archive_dir, subdir)
-        if os.path.exists(path):
+        path = archive_dir / subdir
+        if path.exists():
             for f in os.listdir(path):
                 if f.endswith(".md"):
                     try:
-                        with open(os.path.join(path, f), "r") as file:
+                        with open(path / f, "r") as file:
                             content = file.read()
                             outcomes["won" if subdir == "Won" else "lost"].append(
                                 content
@@ -212,22 +217,22 @@ def analyze_grant(grant, past_outcomes, org_programs):
 
 def run_cerebro_scan(month_str=None):
     """Run full Cerebro intelligence scan"""
-    if month_str is None:
-        month_str = datetime.now().strftime("%Y-%m")
+    month_str = active_month(month_str)
 
-    enriched_file = f"{GRANTS_ROOT}/data/enriched/{month_str}/grants-enriched.json"
+    enriched_file = GRANTS_ROOT / "data" / "enriched" / month_str / "grants-enriched.json"
 
-    if not os.path.exists(enriched_file):
+    if not enriched_file.exists():
         logger.error(f"Enriched data not found: {enriched_file}")
         return False
 
-    with open(enriched_file, "r") as f:
+    with enriched_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
     logger.info(f"Running Cerebro scan on {len(grants)} grants")
 
     past_outcomes = load_past_outcomes()
     org_programs = load_org_programs()
+    grants = annotate_grants_with_outcomes(grants)
 
     intelligence_data = {
         "scan_date": datetime.now().isoformat(),
@@ -269,14 +274,18 @@ def run_cerebro_scan(month_str=None):
         funders[f]["avg_fit"] = funders[f]["total_fit"] / funders[f]["count"]
     intelligence_data["funders_clustered"] = funders
 
-    intelligence_dir = f"{GRANTS_ROOT}/data/intelligence/{month_str}"
-    os.makedirs(intelligence_dir, exist_ok=True)
+    errors = validate_grant_collection(grants, stage="intelligence")
+    if errors:
+        raise ValueError("Intelligence-enriched grants failed validation:\n" + "\n".join(errors))
 
-    output_file = f"{intelligence_dir}/cerebro-analysis.json"
-    with open(output_file, "w") as f:
+    intelligence_dir = GRANTS_ROOT / "data" / "intelligence" / month_str
+    intelligence_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = intelligence_dir / "cerebro-analysis.json"
+    with output_file.open("w", encoding="utf-8") as f:
         json.dump(intelligence_data, f, indent=2)
 
-    with open(enriched_file, "w") as f:
+    with enriched_file.open("w", encoding="utf-8") as f:
         json.dump(grants, f, indent=2)
 
     logger.info(f"Cerebro analysis saved to {output_file}")

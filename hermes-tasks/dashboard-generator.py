@@ -10,7 +10,9 @@ import sys
 import logging
 from datetime import datetime
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import active_month, grants_path
+
+GRANTS_ROOT = grants_path()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -20,16 +22,15 @@ logger = logging.getLogger("dashboard_generator")
 
 def generate_dashboard(month_str=None):
     """Generate tracking dashboard"""
-    if month_str is None:
-        month_str = datetime.now().strftime("%Y-%m")
+    month_str = active_month(month_str)
 
-    enriched_file = f"{GRANTS_ROOT}/data/enriched/{month_str}/grants-enriched.json"
+    enriched_file = GRANTS_ROOT / "data" / "enriched" / month_str / "grants-enriched.json"
 
-    if not os.path.exists(enriched_file):
+    if not enriched_file.exists():
         logger.error(f"Enriched data not found: {enriched_file}")
         return False
 
-    with open(enriched_file, "r") as f:
+    with enriched_file.open("r", encoding="utf-8") as f:
         grants = json.load(f)
 
     active_grants = sorted(
@@ -142,11 +143,11 @@ generated: {datetime.now().isoformat()}
 *Access matrix at: /outputs/matrix/{month_str}/*
 """
 
-    tracking_dir = f"{GRANTS_ROOT}/outputs/tracking/{month_str}"
-    os.makedirs(tracking_dir, exist_ok=True)
+    tracking_dir = GRANTS_ROOT / "outputs" / "tracking" / month_str
+    tracking_dir.mkdir(parents=True, exist_ok=True)
 
-    output_file = f"{tracking_dir}/active-tracking.md"
-    with open(output_file, "w") as f:
+    output_file = tracking_dir / "active-tracking.md"
+    with output_file.open("w", encoding="utf-8") as f:
         f.write(dashboard)
 
     logger.info(f"Tracking dashboard saved to {output_file}")

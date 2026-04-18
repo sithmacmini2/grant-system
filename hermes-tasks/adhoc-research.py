@@ -8,10 +8,11 @@ import json
 import os
 import sys
 import logging
-import subprocess
 from datetime import datetime
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import active_month, grants_path
+
+GRANTS_ROOT = grants_path()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -21,19 +22,18 @@ logger = logging.getLogger("adhoc_research")
 
 def run_adhoc_research(keywords, month_str=None):
     """Run research filtered by keywords"""
-    if month_str is None:
-        month_str = datetime.now().strftime("%Y-%m")
+    month_str = active_month(month_str)
 
     logger.info(f"Running ad-hoc research for: {keywords}")
 
-    raw_file = f"{GRANTS_ROOT}/data/raw/{month_str}/grants-raw.json"
+    raw_file = GRANTS_ROOT / "data" / "raw" / month_str / "grants-raw.json"
 
-    if not os.path.exists(raw_file):
+    if not raw_file.exists():
         logger.warning("No raw data found. Run monthly research first.")
         print(f"❌ No grant data available. Run /research first to populate data.")
         return False
 
-    with open(raw_file, "r") as f:
+    with raw_file.open("r", encoding="utf-8") as f:
         all_grants = json.load(f)
 
     keywords_lower = keywords.lower()
@@ -49,10 +49,11 @@ def run_adhoc_research(keywords, month_str=None):
     logger.info(f"Found {len(filtered)} grants matching '{keywords}'")
 
     if filtered:
-        output_file = f"{GRANTS_ROOT}/outputs/adhoc/{month_str}/grants-{keywords.replace(' ', '-')}.json"
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        output_dir = GRANTS_ROOT / "outputs" / "adhoc" / month_str
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_file = output_dir / f"grants-{keywords.replace(' ', '-')}.json"
 
-        with open(output_file, "w") as f:
+        with output_file.open("w", encoding="utf-8") as f:
             json.dump(filtered, f, indent=2)
 
         results_msg = f"✅ *Research Complete*\n\n"

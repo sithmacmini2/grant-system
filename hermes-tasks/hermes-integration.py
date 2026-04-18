@@ -7,17 +7,20 @@ This script allows Hermes to query grant data and run research.
 import json
 import os
 import sys
+import subprocess
 from datetime import datetime
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
-WIKI_ROOT = "/home/sithmm2_admin/wiki"
+from grants_context import active_month, grants_path
+
+GRANTS_ROOT = grants_path()
 
 
 def get_status():
     """Get system status for Hermes"""
+    month_str = active_month()
     data = {
         "system": "Grant Intelligence Workflow",
-        "location": GRANTS_ROOT,
+        "location": str(GRANTS_ROOT),
         "status": "active",
         "last_run": datetime.now().isoformat(),
         "grants_count": 0,
@@ -25,9 +28,9 @@ def get_status():
         "urgent": 0,
     }
 
-    grants_file = f"{GRANTS_ROOT}/data/enriched/2026-04/grants-enriched.json"
-    if os.path.exists(grants_file):
-        with open(grants_file) as f:
+    grants_file = GRANTS_ROOT / "data" / "enriched" / month_str / "grants-enriched.json"
+    if grants_file.exists():
+        with open(grants_file, encoding="utf-8") as f:
             grants = json.load(f)
             data["grants_count"] = len(grants)
             data["high_priority"] = len(
@@ -50,11 +53,11 @@ def get_status():
 
 def search_grants(query):
     """Search grants by keyword"""
-    grants_file = f"{GRANTS_ROOT}/data/enriched/2026-04/grants-enriched.json"
+    grants_file = GRANTS_ROOT / "data" / "enriched" / active_month() / "grants-enriched.json"
     results = []
 
-    if os.path.exists(grants_file):
-        with open(grants_file) as f:
+    if grants_file.exists():
+        with open(grants_file, encoding="utf-8") as f:
             grants = json.load(f)
             query_lower = query.lower()
             for g in grants:
@@ -77,11 +80,11 @@ def search_grants(query):
 
 def get_urgent_grants():
     """Get grants due within 14 days"""
-    grants_file = f"{GRANTS_ROOT}/data/enriched/2026-04/grants-enriched.json"
+    grants_file = GRANTS_ROOT / "data" / "enriched" / active_month() / "grants-enriched.json"
     urgent = []
 
-    if os.path.exists(grants_file):
-        with open(grants_file) as f:
+    if grants_file.exists():
+        with open(grants_file, encoding="utf-8") as f:
             grants = json.load(f)
             for g in grants:
                 if g.get("enrichment", {}).get("urgency_level") == "HIGH":
@@ -101,18 +104,23 @@ def get_urgent_grants():
 
 def run_monthly_research():
     """Trigger full research cycle"""
-    result = os.system(
-        f"python3 {GRANTS_ROOT}/run-all.py > {GRANTS_ROOT}/logs/hermes-trigger.log 2>&1"
-    )
-    return result == 0
+    log_path = GRANTS_ROOT / "logs" / "hermes-trigger.log"
+    with log_path.open("w", encoding="utf-8") as log_file:
+        result = subprocess.run(
+            [sys.executable, str(GRANTS_ROOT / "run-all.py")],
+            stdout=log_file,
+            stderr=subprocess.STDOUT,
+            check=False,
+        )
+    return result.returncode == 0
 
 
 def get_proposals():
     """Get generated proposal drafts"""
     proposals = []
-    dir_path = f"{GRANTS_ROOT}/outputs/proposals/2026-04"
+    dir_path = GRANTS_ROOT / "outputs" / "proposals" / active_month()
 
-    if os.path.exists(dir_path):
+    if dir_path.exists():
         for f in os.listdir(dir_path):
             if f.endswith("-draft.md"):
                 proposals.append(f)

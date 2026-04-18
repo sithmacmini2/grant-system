@@ -4,20 +4,23 @@ Grant Intelligence System - All-in-One Runner
 Run the complete grant research cycle with one command.
 """
 
+import subprocess
 import sys
-import os
+from pathlib import Path
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
+from grants_context import grants_root
+
+GRANTS_ROOT = grants_root()
 
 
 def run_step(cmd, description):
     print(f"\n{'=' * 50}")
     print(f"STEP: {description}")
     print("=" * 50)
-    result = os.system(cmd)
-    if result != 0:
-        print(f"⚠️ Warning: {description} returned code {result}")
-    return result
+    result = subprocess.run(cmd, check=False)
+    if result.returncode != 0:
+        print(f"Warning: {description} returned code {result.returncode}")
+    return result.returncode
 
 
 def main():
@@ -30,16 +33,18 @@ def main():
     print("Starting complete grant research cycle...")
 
     # Step 1: Scrape new grants
-    run_step(
-        f"python3 {GRANTS_ROOT}/hermes-tasks/scraper.py --save",
+    if run_step(
+        [sys.executable, str(GRANTS_ROOT / "hermes-tasks" / "scraper.py"), "--save"],
         "Scraping grant databases",
-    )
+    ) != 0:
+        return 1
 
     # Step 2: Run monthly research (enrichment, intelligence, outputs)
-    run_step(
-        f"python3 {GRANTS_ROOT}/hermes-tasks/monthly-research.py",
+    if run_step(
+        [sys.executable, str(GRANTS_ROOT / "hermes-tasks" / "monthly-research.py")],
         "Running full research pipeline",
-    )
+    ) != 0:
+        return 1
 
     print("""
 ╔═══════════════════════════════════════════════════════════╗
