@@ -39,7 +39,7 @@
     "wiki": "/home/sithmm2_admin/wiki"
   },
   "telegram": {
-    "bot_token": "8114463389:AAEQPHmADS7olea-VM-0dIqYEOs2fEeVpzo",
+    "bot_token": "",
     "chat_id": "YOUR_CHAT_ID_HERE",
     "enabled": true
   },

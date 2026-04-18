@@ -1,203 +1,392 @@
 #!/usr/bin/env python3
 """
-Telegram Bot Service for Grant Intelligence System
-Run this to enable Telegram command handling.
+Telegram Bot for Grant Intelligence System
 """
 
 import json
 import os
-import sys
 import logging
 import requests
 from datetime import datetime
-import threading
+from pathlib import Path
+import signal
 import time
+import sys
 
-GRANTS_ROOT = "/home/sithmm2_admin/grants-system"
-BOT_TOKEN = "8114463389:AAEQPHmADS7olea-VM-0dIqYEOs2fEeVpzo"
+GRANTS_ROOT = Path(os.environ.get("GRANTS_ROOT", "/home/sithmm2_admin/grants-system"))
+CONFIG_PATH = GRANTS_ROOT / "configs" / "system-config.json"
+LOG_DIR = GRANTS_ROOT / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def load_config():
+    try:
+        with CONFIG_PATH.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, OSError, json.JSONDecodeError) as e:
+        logger_name = "bot.bootstrap"
+        logging.getLogger(logger_name).warning("Could not load config: %s", e)
+        return {}
+
+
+CONFIG = load_config()
+BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN") or CONFIG.get("telegram", {}).get(
+    "bot_token", ""
+)
+MONTH_OVERRIDE = os.environ.get("GRANTS_MONTH", "").strip()
+OFFSET_PATH = LOG_DIR / "telegram-offset.json"
+MAX_TELEGRAM_MESSAGE_LENGTH = 3900
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler(f"{GRANTS_ROOT}/logs/telegram.log"),
+        logging.FileHandler(LOG_DIR / "telegram-bot.log"),
         logging.StreamHandler(),
     ],
+    force=True,
 )
-logger = logging.getLogger("telegram_bot")
+logger = logging.getLogger("bot")
 
 
-class GrantTelegramBot:
+class JsonFileCache:
     def __init__(self):
-        self.token = BOT_TOKEN
-        self.api_url = f"https://api.telegram.org/bot{self.token}"
-        self.offset = 0
+        self._cache = {}
+
+    def read(self, path, default):
+        try:
+            stat = path.stat()
+            cached = self._cache.get(path)
+            if cached and cached["mtime"] == stat.st_mtime:
+                return cached["data"]
+
+            with path.open("r", encoding="utf-8") as f:
+                data = json.load(f)
+            self._cache[path] = {"mtime": stat.st_mtime, "data": data}
+            return data
+        except FileNotFoundError:
+            self._cache.pop(path, None)
+            return default
+        except (OSError, json.JSONDecodeError) as e:
+            logger.error("Failed to read %s: %s", path, e)
+            return default
+
+
+class Bot:
+    def __init__(self):
+        if not BOT_TOKEN:
+            raise RuntimeError(
+                "Telegram bot token missing. Set TELEGRAM_BOT_TOKEN."
+            )
+        self.api = f"https://api.telegram.org/bot{BOT_TOKEN}"
+        self.session = requests.Session()
+        self.cache = JsonFileCache()
+        self.offset = self.load_offset()
+        self.month = self.latest_month()
+        self.running = True
+
+    def send(self, chat_id, text):
+        logger.info("Sending message to chat %s (%s chars)", chat_id, len(text))
+        result = self.request_json(
+            "post",
+            f"{self.api}/sendMessage",
+            json={"chat_id": chat_id, "text": self.truncate_message(text)},
+            timeout=10,
+        )
+        if result and not result.get("ok"):
+            logger.error("Telegram send failed: %s", result)
+
+    def request_json(self, method, url, attempts=3, **kwargs):
+        last_error = None
+        for attempt in range(1, attempts + 1):
+            try:
+                response = self.session.request(method, url, **kwargs)
+                response.raise_for_status()
+                return response.json()
+            except (requests.RequestException, ValueError) as e:
+                last_error = e
+                if attempt < attempts:
+                    time.sleep(min(2 ** (attempt - 1), 5))
+        logger.error("Telegram request failed after %s attempt(s): %s", attempts, last_error)
+        return None
+
+    def load_offset(self):
+        try:
+            with OFFSET_PATH.open("r", encoding="utf-8") as f:
+                data = json.load(f)
+            return int(data.get("offset", 0))
+        except (FileNotFoundError, OSError, ValueError, json.JSONDecodeError):
+            return 0
+
+    def save_offset(self):
+        try:
+            temp_path = OFFSET_PATH.with_suffix(".tmp")
+            temp_path.write_text(json.dumps({"offset": self.offset}), encoding="utf-8")
+            temp_path.replace(OFFSET_PATH)
+        except OSError as e:
+            logger.error("Failed to save Telegram offset: %s", e)
+
+    def stop(self, signum=None, frame=None):
+        logger.info("Stopping polling...")
         self.running = False
 
-    def send_message(self, chat_id, text, parse_mode="Markdown"):
-        """Send a message"""
-        url = f"{self.api_url}/sendMessage"
-        data = {"chat_id": chat_id, "text": text, "parse_mode": parse_mode}
-        try:
-            requests.post(url, json=data, timeout=10)
-        except Exception as e:
-            logger.error(f"Send error: {e}")
-
-    def handle_command(self, command, args, chat_id):
-        """Handle incoming commands"""
-        logger.info(f"Command: {command} {args}")
-
-        commands = {
-            "start": lambda: self.send_message(
+    def handle(self, cmd, args, chat_id):
+        cmd = cmd.replace("-", "_")
+        logger.info("Handling command /%s for chat %s", cmd, chat_id)
+        if cmd == "start":
+            self.send(chat_id, "Grant System Active! /help for commands")
+        elif cmd == "help":
+            self.send(
                 chat_id,
-                "✅ *Grant Intelligence System*\n\nWelcome! Use /help for commands.",
-            ),
-            "help": lambda: self.send_message(
+                (
+                    "Commands:\n"
+                    "/status\n"
+                    "/grants or /grants_this_month\n"
+                    "/alerts or /deadline_alerts\n"
+                    "/rank or /rank_by_deadline\n"
+                    "/patterns or /pattern_scan\n"
+                    "/research [keywords]\n"
+                    "/brief or /grant_brief [name]\n"
+                    "/funder_intel [name]"
+                ),
+            )
+        elif cmd == "status":
+            grants = self.load_grants()
+            month = self.month or "No data"
+            self.send(
                 chat_id,
-                """
-📋 *Commands:*
-
-/grants_this_month - View dashboard
-/grant_brief [name] - Get brief
-/rank_by_deadline - Matrix by deadline
-/funder_intel [name] - Funder profile
-/pattern_scan - Success patterns
-/research [keywords] - Search grants
-/deadline_alerts - Urgent deadlines
-/status - System status
-            """,
-            ),
-            "status": lambda: self.cmd_status(chat_id),
-            "grants_this_month": lambda: self.cmd_grants_month(chat_id),
-            "deadline_alerts": lambda: self.cmd_deadlines(chat_id),
-            "rank_by_deadline": lambda: self.cmd_rank(chat_id),
-            "pattern_scan": lambda: self.cmd_patterns(chat_id),
-        }
-
-        if command in ["grant_brief", "research", "funder_intel"]:
-            commands[command](args, chat_id)
-        elif command in commands:
-            commands[command]()
+                (
+                    "Grant Intelligence System Status\n"
+                    f"Data month: {month}\n"
+                    f"Active grants: {len(grants)}\n"
+                    f"Last check: {datetime.now().strftime('%Y-%m-%d %H:%M')}\n"
+                    f"Location: {GRANTS_ROOT}"
+                ),
+            )
+        elif cmd in {"grants", "grants_this_month"}:
+            self.cmd_grants(chat_id)
+        elif cmd in {"alerts", "deadline_alerts"}:
+            self.cmd_alerts(chat_id)
+        elif cmd in {"rank", "rank_by_deadline"}:
+            self.cmd_rank(chat_id)
+        elif cmd in {"patterns", "pattern_scan"}:
+            self.cmd_patterns(chat_id)
+        elif cmd == "research":
+            self.cmd_research(chat_id, args)
+        elif cmd in {"brief", "grant_brief"}:
+            self.cmd_brief(chat_id, args)
+        elif cmd == "funder_intel":
+            self.cmd_funder(chat_id, args)
         else:
-            self.send_message(chat_id, f"Unknown command: {command}")
+            self.send(chat_id, f"Unknown: {cmd}")
 
-    def cmd_status(self, chat_id):
-        """Handle /status command"""
-        import subprocess
+    def latest_month(self):
+        if MONTH_OVERRIDE:
+            return MONTH_OVERRIDE
 
-        result = subprocess.run(
-            f"ls {GRANTS_ROOT}/data/raw/ 2>/dev/null | tail -1",
-            shell=True,
-            capture_output=True,
-            text=True,
-        )
-        month = result.stdout.strip() or "No data"
+        candidates = []
+        for base in (
+            GRANTS_ROOT / "data" / "enriched",
+            GRANTS_ROOT / "outputs" / "tracking",
+            GRANTS_ROOT / "outputs" / "matrix",
+        ):
+            if base.exists():
+                candidates.extend(p.name for p in base.iterdir() if p.is_dir())
+        return max(candidates) if candidates else datetime.now().strftime("%Y-%m")
 
-        msg = f"""✅ *System Status*
+    def read_json(self, path, default):
+        return self.cache.read(path, default)
 
-• Location: `/home/sithmm2_admin/grants-system/`
-• Data Month: {month}
-• Last Run: {datetime.now().strftime("%Y-%m-%d %H:%M")}
-• Bot: Active
+    def load_grants(self):
+        path = GRANTS_ROOT / "data" / "enriched" / self.month / "grants-enriched.json"
+        data = self.read_json(path, [])
+        return data if isinstance(data, list) else []
 
-Use /help for commands."""
-        self.send_message(chat_id, msg)
-
-    def cmd_grants_month(self, chat_id):
-        """Handle /grants_this_month"""
-        dashboard = f"{GRANTS_ROOT}/outputs/tracking/2026-04/active-tracking.md"
-        if os.path.exists(dashboard):
-            self.send_message(chat_id, "📊 *Tracking Dashboard*\n\n" + dashboard)
+    def cmd_grants(self, chat_id):
+        path = GRANTS_ROOT / "outputs" / "tracking" / self.month / "active-tracking.md"
+        if path.exists():
+            self.send(chat_id, f"Tracking dashboard: {path}")
         else:
-            self.send_message(chat_id, "❌ Run monthly research first.")
+            self.send(chat_id, "No tracking dashboard found. Run monthly research first.")
 
-    def cmd_deadlines(self, chat_id):
-        """Handle /deadline_alerts"""
-        self.send_message(
-            chat_id,
-            "📅 Checking deadlines...\n\nRun `/weekly-deadline-check.py` to generate alerts.",
-        )
-
-    def cmd_rank(self, chat_id):
-        """Handle /rank_by_deadline"""
-        self.send_message(
-            chat_id, "📋 Matrix: `/outputs/matrix/2026-04/2026-04-grant-matrix.csv`"
-        )
-
-    def cmd_patterns(self, chat_id):
-        """Handle /pattern_scan"""
-        intel = f"{GRANTS_ROOT}/data/intelligence/2026-04/cerebro-analysis.json"
-        if os.path.exists(intel):
-            with open(intel) as f:
-                data = json.load(f)
-            patterns = data.get("patterns_identified", [])[:5]
-            msg = "🧠 *Patterns:*\n" + "\n".join([f"• {p}" for p in patterns])
-            self.send_message(chat_id, msg)
-        else:
-            self.send_message(chat_id, "❌ Run monthly research first.")
-
-    def process_update(self, update):
-        """Process a single update"""
-        if "message" not in update:
+    def cmd_alerts(self, chat_id):
+        urgent = [
+            grant
+            for grant in self.load_grants()
+            if grant.get("enrichment", {}).get("urgency_level") == "HIGH"
+        ]
+        if not urgent:
+            self.send(chat_id, "No urgent deadlines.")
             return
 
-        msg = update["message"]
-        chat_id = msg.get("chat", {}).get("id")
-        text = msg.get("text", "")
+        lines = ["Urgent deadlines:"]
+        for grant in urgent[:5]:
+            name = grant.get("name", "Unnamed grant")
+            deadline = grant.get("deadline", "No deadline")
+            amount = self.format_amount(grant.get("amount"))
+            lines.append(f"- {name} | {deadline} | {amount}")
+        if len(urgent) > 5:
+            lines.append(f"+{len(urgent) - 5} more")
+        self.send(chat_id, "\n".join(lines))
 
-        if not text.startswith("/"):
+    def cmd_rank(self, chat_id):
+        path = (
+            GRANTS_ROOT
+            / "outputs"
+            / "matrix"
+            / self.month
+            / f"{self.month}-grant-matrix.csv"
+        )
+        if path.exists():
+            self.send(chat_id, f"Grant matrix: {path}")
+        else:
+            self.send(chat_id, "No grant matrix found.")
+
+    def cmd_patterns(self, chat_id):
+        path = (
+            GRANTS_ROOT
+            / "data"
+            / "intelligence"
+            / self.month
+            / "cerebro-analysis.json"
+        )
+        patterns = self.read_json(path, {}).get("patterns_identified", [])
+        if patterns:
+            self.send(chat_id, "Patterns:\n" + "\n".join(f"- {p}" for p in patterns[:5]))
+        else:
+            self.send(chat_id, "No pattern analysis found. Run research first.")
+
+    def cmd_research(self, chat_id, args):
+        if not args:
+            self.send(chat_id, "Usage: /research [keywords]")
+            return
+
+        needle = args.lower()
+        matches = [
+            grant
+            for grant in self.load_grants()
+            if needle in f"{grant.get('name', '')} {grant.get('funder', '')}".lower()
+        ]
+        if not matches:
+            self.send(chat_id, "No matches.")
+            return
+
+        lines = [f"Found {len(matches)} match(es):"]
+        for grant in matches[:5]:
+            name = grant.get("name", "Unnamed grant")
+            funder = grant.get("funder", "Unknown funder")
+            amount = self.format_amount(grant.get("amount"))
+            lines.append(f"- {name} | {funder} | {amount}")
+        self.send(chat_id, "\n".join(lines))
+
+    def cmd_brief(self, chat_id, args):
+        if not args:
+            self.send(chat_id, "Usage: /brief [name]")
+            return
+
+        brief_dir = GRANTS_ROOT / "outputs" / "briefs" / self.month
+        slug = self.slugify(args)
+        matches = (
+            sorted(brief_dir.glob(f"*{slug}*-brief.md"))
+            if brief_dir.exists()
+            else []
+        )
+        if not matches:
+            self.send(chat_id, f"Brief not found for: {args}")
+            return
+
+        try:
+            preview = matches[0].read_text(encoding="utf-8")[:900].strip()
+        except OSError as e:
+            logger.error("Failed to read brief %s: %s", matches[0], e)
+            self.send(chat_id, "Brief found, but it could not be read.")
+            return
+        self.send(chat_id, f"Brief: {matches[0].name}\n\n{preview}")
+
+    def cmd_funder(self, chat_id, args):
+        if not args:
+            self.send(chat_id, "Usage: /funder_intel [name]")
+            return
+
+        funders = self.read_json(
+            GRANTS_ROOT / "data" / "intelligence" / self.month / "cerebro-analysis.json",
+            {},
+        ).get("funders_clustered", {})
+        match = next((name for name in funders if args.lower() in name.lower()), None)
+        if not match:
+            self.send(chat_id, f"No funder profile found for: {args}")
+            return
+
+        profile = funders[match]
+        self.send(
+            chat_id,
+            (
+                f"Funder: {match}\n"
+                f"Grants tracked: {profile.get('count', 0)}\n"
+                f"Average fit: {profile.get('avg_fit', 0):.1f}"
+            ),
+        )
+
+    @staticmethod
+    def format_amount(amount):
+        if isinstance(amount, (int, float)):
+            return f"${amount:,.0f}"
+        return "Amount unavailable"
+
+    @staticmethod
+    def slugify(value):
+        return "-".join(value.lower().strip().replace("_", " ").split())
+
+    @staticmethod
+    def truncate_message(text):
+        if len(text) <= MAX_TELEGRAM_MESSAGE_LENGTH:
+            return text
+        suffix = "\n\n[message truncated]"
+        return text[: MAX_TELEGRAM_MESSAGE_LENGTH - len(suffix)] + suffix
+
+    def process_update(self, update):
+        self.offset = max(self.offset, update.get("update_id", self.offset - 1) + 1)
+        self.save_offset()
+        logger.info("Processing update %s", update.get("update_id"))
+
+        message = update.get("message") or {}
+        text = message.get("text", "")
+        chat_id = message.get("chat", {}).get("id")
+        if not chat_id or not text.startswith("/"):
+            logger.info("Skipping non-command update %s", update.get("update_id"))
             return
 
         parts = text.split(" ", 1)
-        command = parts[0].replace("/", "").lower()
+        cmd = parts[0][1:].split("@", 1)[0].lower()
         args = parts[1] if len(parts) > 1 else None
-
-        self.handle_command(command, args, chat_id)
+        self.handle(cmd, args, chat_id)
 
     def poll(self):
-        """Poll for updates"""
-        logger.info("Starting polling...")
-        self.running = True
-
+        logger.info("Polling...")
         while self.running:
-            try:
-                url = f"{self.api_url}/getUpdates?timeout=60&offset={self.offset}"
-                response = requests.get(url, timeout=65)
-                updates = response.json().get("result", [])
-
-                for update in updates:
-                    self.offset = update["update_id"] + 1
-                    self.process_update(update)
-
-            except Exception as e:
-                logger.error(f"Polling error: {e}")
+            result = self.request_json(
+                "get",
+                f"{self.api}/getUpdates?timeout=60&offset={self.offset}",
+                attempts=1,
+                timeout=65,
+            )
+            if not result:
                 time.sleep(5)
+                continue
+            if not result.get("ok", True):
+                logger.error("Telegram polling failed: %s", result)
+                time.sleep(5)
+                continue
 
-    def start_polling(self):
-        """Start polling in background"""
-        thread = threading.Thread(target=self.poll, daemon=True)
-        thread.start()
-        return thread
-
-
-def main():
-    bot = GrantTelegramBot()
-
-    if len(sys.argv) > 1 and sys.argv[1] == "poll":
-        logger.info("Starting Telegram bot in polling mode...")
-        bot.start_polling()
-
-        try:
-            while True:
-                time.sleep(60)
-        except KeyboardInterrupt:
-            logger.info("Stopping bot...")
-    else:
-        print("Telegram bot ready. Run with 'poll' flag to start receiving commands.")
-        print(
-            "Commands: /start, /help, /status, /grants_this_month, /deadline_alerts, /rank_by_deadline, /pattern_scan"
-        )
+            for u in result.get("result", []):
+                self.process_update(u)
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "poll":
+        bot = Bot()
+        signal.signal(signal.SIGINT, bot.stop)
+        signal.signal(signal.SIGTERM, bot.stop)
+        bot.poll()
+    else:
+        print("Run with: python3 telegram-bot.py poll")

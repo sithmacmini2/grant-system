@@ -14,7 +14,7 @@
 | Obsidian vault | `/home/sithmm2_admin/wiki/` |
 | Opencode | `/home/sithmm2_admin/.opencode/bin/opencode` |
 | Hermes | `/home/sithmm2_admin/.local/bin/hermes` |
-| Telegram bot token | `8114463389:AAEQPHmADS7olea-VM-0dIqYEOs2fEeVpzo` |
+| Telegram bot token | `TELEGRAM_BOT_TOKEN` environment variable |
 | Test data | `/home/sithmm2_admin/Downloads/Downloaded-Grants/` |
 
 ## 5-Layer Architecture
@@ -47,13 +47,13 @@
 - LLM Wiki auto-updates
 
 ## Telegram Commands
-- /grants-this-month - Current tracking dashboard
-- /grant-brief [name] - Specific brief
-- /rank-by-deadline - Matrix sorted by urgency
-- /funder-intel [name] - Funder profile
-- /pattern-scan - Cerebro themes
-- /research [keywords] - Ad-hoc research
-- /deadline-alerts - Grants due < 14 days
+- /grants or /grants_this_month - Current tracking dashboard
+- /brief or /grant_brief [name] - Specific brief
+- /rank or /rank_by_deadline - Matrix sorted by urgency
+- /funder_intel [name] - Funder profile
+- /patterns or /pattern_scan - Cerebro themes
+- /research [keywords] - Search current grant data
+- /alerts or /deadline_alerts - Grants due < 14 days
 - /status - System status
 
 ## Implementation Phases

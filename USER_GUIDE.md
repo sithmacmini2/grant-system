@@ -18,15 +18,19 @@ python3 /home/sithmm2_admin/grants-system/hermes-tasks/adhoc-research.py "youth"
 
 ### Telegram Commands
 
+Set `TELEGRAM_BOT_TOKEN` before starting the bot. Set `GRANTS_MONTH=YYYY-MM`
+only when you need to inspect a specific month instead of the latest available
+research data.
+
 | Command | Description |
 |---------|-------------|
-| `/grants-this-month` | View current tracking dashboard |
-| `/grant-brief [name]` | Get specific grant brief |
-| `/rank-by-deadline` | Sort matrix by urgency |
-| `/funder-intel [name]` | Get funder profile |
-| `/pattern-scan` | View success patterns (6 months) |
-| `/research [keywords]` | Trigger subset research |
-| `/deadline-alerts` | Show urgent grants (<14 days) |
+| `/grants` or `/grants_this_month` | View current tracking dashboard |
+| `/brief [name]` or `/grant_brief [name]` | Get specific grant brief |
+| `/rank` or `/rank_by_deadline` | Sort matrix by urgency |
+| `/funder_intel [name]` | Get funder profile |
+| `/patterns` or `/pattern_scan` | View success patterns |
+| `/research [keywords]` | Search current grant data |
+| `/alerts` or `/deadline_alerts` | Show urgent grants (<14 days) |
 | `/status` | System status |
 
 ### Viewing Outputs
