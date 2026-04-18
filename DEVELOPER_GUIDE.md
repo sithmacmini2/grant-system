@@ -75,3 +75,23 @@ python3 hermes-tasks/monthly-research.py
 
 ---
 *Last updated: 2026-04-17*
+# Publishing Updates
+
+Use the helper scripts for routine GitHub updates. They run the bot test suite,
+compile the Telegram bot files, check whitespace, and refuse to push directly
+from `main` or `master`.
+
+Push an already committed feature branch:
+
+```bash
+scripts/push-updates.sh
+```
+
+Commit scoped project files and push the current feature branch:
+
+```bash
+scripts/commit-and-push.sh "Describe the change"
+```
+
+The commit script stages a curated allowlist of project files and directories.
+It does not stage ignored logs, bytecode, `.codex`, or local runtime state.
